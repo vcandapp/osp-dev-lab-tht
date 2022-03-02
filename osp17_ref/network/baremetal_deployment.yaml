@@ -1,0 +1,68 @@
+- name: Controller
+  count: 3
+  hostname_format: controller-%index%
+  defaults:
+    networks:
+      - network: ctlplane
+        subnet: subnet_ctlplane
+        vif: true
+      - network: external
+        subnet: subnet_external
+      - network: internal_api
+        subnet: subnet_internal_api
+      - network: storage
+        subnet: subnet_storage
+      - network: storage_mgmt
+        subnet: subnet_storage_mgmt
+      - network: tenant
+        subnet: subnet_tenant
+    network_config:
+      template: /home/stack/osp17_ref/nic-configs/controller.j2
+      default_route_network:
+        - external
+
+- name: Compute
+  count: 0
+  defaults:
+    networks:
+    - network: ctlplane
+      vif: true
+    - network: internalapi
+      subnet: internal_api_subnet02
+    - network: tenant
+      subnet: tenant_subnet02
+    - network: storage
+      subnet: storage_subnet02
+    network_config:
+      template: /home/stack/nic-config/compute.j2
+
+- name: Computesriov
+  count: 1
+  hostname_format: computesriov-%index%
+  defaults:
+    networks:
+    - network: ctlplane
+      vif: true
+    - network: internal_api
+      subnet: subnet_internal_api
+    - network: tenant
+      subnet: subnet_tenant
+    - network: storage
+      subnet: subnet_storage
+    network_config:
+      template: /home/stack/osp17_ref/nic-configs/computesriov.j2
+    config_drive:
+      cloud_config:
+        ssh_pwauth: true
+        disable_root: false
+        chpasswd:
+          list: |-
+            root:12345678
+        expire: False
+  ansible_playbooks:
+    - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-node-kernelargs.yaml
+      extra_vars:
+        reboot_wait_timeout: 900
+        kernel_args: 'default_hugepagesz=1GB hugepagesz=1G hugepages=32 iommu=pt intel_iommu=on isolcpus=1-11,13-23'
+        tuned_profile: 'cpu-partitioning'
+        tuned_isolated_cores: '1-11,13-23'

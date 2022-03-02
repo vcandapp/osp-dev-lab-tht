@@ -1,0 +1,47 @@
+---
+network_config:
+- type: interface
+  name: nic1
+  use_dhcp: true
+  defroute: true
+- type: interface
+  name: nic2
+  use_dhcp: false
+  dns_servers: {{ ctlplane_dns_nameservers }}
+  addresses:
+  - ip_netmask: {{ ctlplane_ip }}/{{ ctlplane_subnet_cidr }}
+  routes: {{ [ctlplane_host_routes, [{'default': True, 'next_hop': ctlplane_gateway_ip}]] | flatten | unique }}
+- type: vlan
+  vlan_id: {{ internal_api_vlan_id }}
+  device: nic2
+  addresses:
+  - ip_netmask: {{ internal_api_ip }}/{{ internal_api_cidr }}
+- type: vlan
+  vlan_id: {{ storage_vlan_id }}
+  device: nic2
+  addresses:
+  - ip_netmask: {{ storage_ip }}/{{ storage_cidr }}
+- type: ovs_user_bridge
+  name: br-link1
+  use_dhcp: false
+  ovs_extra:
+  - 'UNSUPPORTED HEAT INTRINSIC FUNCTION str_replace REQUIRES MANUAL CONVERSION {''str_replace'': {''template'': ''set port br-link1 tag=_VLAN_TAG_'', ''params'': {''_VLAN_TAG_'': {''get_param'': ''TenantNetworkVlanID''}}}}
+  addresses:
+  - ip_netmask: {{ tenant_ip }}/{{ tenant_cidr }}
+  members:
+  - type: ovs_dpdk_port
+    name: dpdk-link1-port
+    mtu: 9000
+    members:
+    - type: interface
+      name: nic3
+- type: ovs_user_bridge
+  name: br-link2
+  use_dhcp: false
+  members:
+  - type: ovs_dpdk_port
+    name: dpdk-link2-port
+    mtu: 9000
+    members:
+    - type: interface
+      name: nic4
