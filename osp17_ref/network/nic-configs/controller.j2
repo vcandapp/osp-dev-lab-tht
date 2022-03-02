@@ -3,13 +3,11 @@ network_config:
 - type: interface
   name: nic1
   use_dhcp: false
-  dns_servers: {{ ctlplane_dns_nameservers }}
   addresses:
   - ip_netmask: {{ ctlplane_ip }}/{{ ctlplane_subnet_cidr }}
   routes: {{ [ctlplane_host_routes] | flatten | unique }}
 - type: ovs_bridge
   name: bridge_name
-  dns_servers: {{ ctlplane_dns_nameservers }}
   use_dhcp: false
   addresses:
   - ip_netmask: {{ external_ip }}/{{ external_cidr }}
