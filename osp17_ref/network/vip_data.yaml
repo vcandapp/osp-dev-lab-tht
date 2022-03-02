@@ -5,6 +5,6 @@
 - network: internal_api
   dns_name: overcloud
 - network: external
-  subnet: subnet_external
+  subnet: external_subnet
 - network: ctlplane
   dns_name: overcloud
