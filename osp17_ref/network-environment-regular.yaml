@@ -1,0 +1,30 @@
+#resource_registry:
+#  OS::TripleO::ComputeOvsDpdkSriov::Net::SoftwareConfig: nic-configs/computeovsdpdksriov.yaml
+#  OS::TripleO::Controller::Net::SoftwareConfig: nic-configs/controller.yaml
+#  OS::TripleO::ControllerSriov::Net::SoftwareConfig: nic-configs/controller.yaml
+
+parameter_defaults:
+  NeutronTunnelTypes: 'geneve'
+  NeutronNetworkType: ['geneve', 'vlan']
+  NeutronEnableDVR: false
+  NeutronPluginExtensions: "port_security,qos,segments,trunk,placement"
+  NeutronSriovAgentExtensions: "qos"
+  #NeutronTunnelTypes: 'vxlan'
+  #NeutronNetworkType: ['vxlan', 'vlan']
+
+  ComputeOvsDpdkSriovParameters:
+    NeutronPhysicalDevMappings: ["sriov1:eno3", "sriov2:eno4"]
+
+    NovaPCIPassthrough:
+    - devname: "eno3"
+      trusted: "true"
+      physical_network: "sriov1"
+    - devname: "eno4"
+      trusted: "true"
+      physical_network: "sriov2"
+
+   #NeutronSriovResourceProviderBandwidths: eno3:4000000:9000000,eno4:4000000:9000000
+   #ComputeOvsDpdkSriovExtraConfig:
+   #  neutron::agents::ml2::sriov::resource_provider_hypervisors:
+   #      "enp4s0f0:%{hiera('fqdn_canonical')},enp4s0f1:%{hiera('fqdn_canonical')}"
+

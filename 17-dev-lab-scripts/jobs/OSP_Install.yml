@@ -48,7 +48,7 @@ pipeline {
         'dell-r640-oss-13.lab.eng.brq.redhat.com'
       ],
       description: 'Select a cluster')
-    string(name: 'beaker_user', defaultValue: 'vcandap', description: 'Beaker username')
+    string(name: 'beaker_user', defaultValue: 'vcandapp', description: 'Beaker username')
     choice(name: 'release', choices: ['17.0', '16.2', '16.1', '13'], description: 'Select the OSP release')
     string(name: 'build', defaultValue: 'passed_phase1', description: 'passed_phase2,passed_phase1,GA')
     string(name: 'repo_url', defaultValue: 'https://github.com/vcandapp/osp-dev-lab-tht.git', description: 'Deploy Templates Repo')
