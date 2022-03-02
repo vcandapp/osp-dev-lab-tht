@@ -4,6 +4,9 @@
   defaults:
     profile: control
     networks:
+      - network: ctlplane
+        subnet: ctlplane_subnet
+        vif: true
       - network: external
         subnet: external_subnet
       - network: internal_api
@@ -25,13 +28,14 @@
     profile: compute
     networks:
     - network: ctlplane
+      subnet: ctlplane_subnet
       vif: true
     - network: internalapi
-      subnet: internal_api_subnet02
+      subnet: internal_api_subnet
     - network: tenant
-      subnet: tenant_subnet02
+      subnet: tenant_subnet
     - network: storage
-      subnet: storage_subnet02
+      subnet: storage_subnet
     network_config:
       template: /home/stack/nic-config/compute.j2
 
@@ -40,6 +44,9 @@
   hostname_format: computeovsdpdksriov-%index%
   defaults:
     networks:
+    - network: ctlplane
+      subnet: ctlplane_subnet
+      vif: true
     - network: internal_api
       subnet: internal_api_subnet
     - network: tenant

@@ -4,6 +4,9 @@
   defaults:
     profile: control
     networks:
+      - network: ctlplane
+        subnet: ctlplane_subnet
+        vif: true
       - network: external
         subnet: external_subnet
       - network: internal_api
@@ -70,6 +73,9 @@
   defaults:
     profile: compute
     networks:
+      - network: ctlplane
+        subnet: ctlplane_subnet
+        vif: true
       - network: internal_api
         subnet: internal_api_subnet
       - network: tenant
