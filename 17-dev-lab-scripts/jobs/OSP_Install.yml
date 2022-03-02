@@ -48,7 +48,7 @@ pipeline {
         'dell-r640-oss-13.lab.eng.brq.redhat.com'
       ],
       description: 'Select a cluster')
-    string(name: 'beaker_user', defaultValue: 'skramaja', description: 'Beaker username')
+    string(name: 'beaker_user', defaultValue: 'vcandap', description: 'Beaker username')
     choice(name: 'release', choices: ['17.0', '16.2', '16.1', '13'], description: 'Select the OSP release')
     string(name: 'build', defaultValue: 'passed_phase1', description: 'passed_phase2,passed_phase1,GA')
     string(name: 'repo_url', defaultValue: 'https://github.com/vcandapp/osp-dev-lab-tht.git', description: 'Deploy Templates Repo')
@@ -91,7 +91,7 @@ pipeline {
       }
       steps {
         withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
-          sh './osp/scripts_v2/install_configure.sh'
+          sh './17-dev-lab-scripts/osp/scripts_v2/install_configure.sh'
         }
       }
     }
@@ -104,7 +104,7 @@ pipeline {
         VLAN_CONFIG = "${VLAN_CONFIG}"
       }
       steps {
-        sh './osp/scripts/install_topology.sh'
+        sh './17-dev-lab-scripts/osp/scripts_v2/install_topology.sh'
       }
     }
     stage('Undercloud') {
@@ -112,7 +112,7 @@ pipeline {
         expression { return params.server != "---" }
       }
       steps {
-        sh './osp/scripts/install_undercloud.sh'
+        sh './17-dev-lab-scripts/osp/scripts_v2/install_undercloud.sh'
       }
     }
     stage('Introspect') {
@@ -121,7 +121,7 @@ pipeline {
       }
       steps {
         withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
-          sh './osp/scripts/install_introspect.sh'
+          sh './17-dev-lab-scripts/osp/scripts_v2/install_introspect.sh'
         }
       }
     }
@@ -130,14 +130,14 @@ pipeline {
         expression { return params.server != "---" }
       }
       steps {
-        sh './osp/scripts/install_overcloud.sh'
+        sh './17-dev-lab-scripts/osp/scripts_v2/install_overcloud.sh'
       }
     }
   }
   post {
     always {
       script {
-        sh './logs/collect.sh'
+        sh './17-dev-lab-scripts/logs/collect.sh'
       }
     }
     success {
