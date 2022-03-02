@@ -77,8 +77,8 @@ pipeline {
         expression { return params.server != "---" && !params.baremetal }
       }
       steps {
-        sh './osp/scripts_v2/baremetal_configure.sh'
-        sh './osp/scripts_v2/install_clean.sh'
+        sh './17-dev-lab-scripts/osp/scripts_v2/baremetal_configure.sh'
+        sh './17-dev-lab-scripts/osp/scripts_v2/install_clean.sh'
       }
     }
     stage('Setup') {
