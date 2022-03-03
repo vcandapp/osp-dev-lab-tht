@@ -25,9 +25,9 @@ openstack overcloud deploy $PARAMS \
     --stack overcloud \
     --network-config \
     --deployed-server \
-    --baremetal-deployment ~/osp17_ref/baremetal_deployment.yaml \
+    --baremetal-deployment /home/stack/osp17_ref/network/baremetal_deployment.yaml \
     -r $HOME/roles_data.yaml \
-    --vip-file /home/stack/osp17_ref/vip_data.yaml \
+    --vip-file /home/stack/osp17_ref/network/vip_data.yaml \
     -n $USER_THT/network_data_v2.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/network-environment.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/services/neutron-ovn-dpdk.yaml \

@@ -5,7 +5,6 @@
     profile: control
     networks:
       - network: ctlplane
-        subnet: ctlplane_subnet
         vif: true
       - network: external
         subnet: external_subnet
@@ -18,26 +17,9 @@
       - network: tenant
         subnet: tenant_subnet
     network_config:
-      template: /home/stack/osp17_ref/nic-configs/controller.j2
+      template: /home/stack/osp17_ref/network/nic-configs/controller.yaml
       default_route_network:
         - external
-
-- name: Compute
-  count: 0
-  defaults:
-    profile: compute
-    networks:
-    - network: ctlplane
-      subnet: ctlplane_subnet
-      vif: true
-    - network: internalapi
-      subnet: internal_api_subnet
-    - network: tenant
-      subnet: tenant_subnet
-    - network: storage
-      subnet: storage_subnet
-    network_config:
-      template: /home/stack/nic-config/compute.j2
 
 - name: ComputeOvsDpdkSriov
   count: 2
@@ -45,7 +27,6 @@
   defaults:
     networks:
     - network: ctlplane
-      subnet: ctlplane_subnet
       vif: true
     - network: internal_api
       subnet: internal_api_subnet
@@ -54,8 +35,7 @@
     - network: storage
       subnet: storage_subnet
     network_config:
-      template: /home/stack/osp17_ref/nic-configs/computeovsdpdksriov.j2
-      net_config_data_lookup: ""
+      template: /home/stack/osp17_ref/network/nic-configs/computeovsdpdksriov.yaml
     config_drive:
       cloud_config:
         ssh_pwauth: true

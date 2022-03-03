@@ -34,7 +34,6 @@ else
     NET_BACKEND=' --network-ovn yes --network-ovs no --network-backend geneve '
 fi
 
-echo "Installing templates from $THT_PATH"
 infrared tripleo-overcloud -vv \
     --version ${RELEASE} \
     --introspect=no --tagging=no --tht-roles yes --deploy=yes --overcloud-templates none \
