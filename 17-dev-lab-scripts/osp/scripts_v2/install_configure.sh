@@ -7,7 +7,8 @@ TMPL_DIR="osp${release%.*}_ref"
 CMD_FILE="overcloud_deploy_${deploy_type}.sh"
 COMMON_NET_DATA="17-dev-lab-scripts/osp/network_data_v2/${server}"
 COMMON_NET_DATA_V2="17-dev-lab-scripts/osp/network_data_v2/${server}_v2"
-COMMON_VIP_DATA="17-dev-lab-scripts/osp/network_data_v2/vip_data.yaml"
+COMMON_VIP_CFG="17-dev-lab-scripts/osp/network_data_v2/vip_data.yaml"
+COMMON_BAREMETAL_CFG="17-dev-lab-scripts/osp/network_data_v2/baremetal_deployment.yaml"
 
 THT_BASE=`basename $THT_URL`
 THT_DIR="${THT_BASE%.git}"
@@ -37,6 +38,7 @@ scp ${OPT} network_data.yaml root@${server}:/root/infrared/${THT_PATH}/
 cp $COMMON_NET_DATA_V2 ${THT_PATH}/network_data_v2.yaml
 scp ${OPT} ${THT_PATH}/network_data_v2.yaml root@${server}:/root/infrared/${THT_PATH}/
 scp ${OPT} $COMMON_VIP_DATA root@${server}:/root/infrared/${THT_PATH}/
+scp ${OPT} $COMMON_BAREMETAL_CFG root@${server}:/root/infrared/${THT_PATH}/
 
 awk -v var="$VLAN_CONFIG" 'BEGIN{x=var;FS="\\n"} /NeutronNetworkVLANRanges:/{gsub("NeutronNetworkVLANRanges:.*","NeutronNetworkVLANRanges: dpdk1:"x+5":"x+10",dpdk2:"x+5":"x+10",sriov1:"x+5":"x+10",sriov2:"x+5":"x+10   )} {print}' ${THT_PATH}/network-environment.yaml > network-environment.yaml
 scp ${OPT} network-environment.yaml root@${server}:/root/infrared/${THT_PATH}

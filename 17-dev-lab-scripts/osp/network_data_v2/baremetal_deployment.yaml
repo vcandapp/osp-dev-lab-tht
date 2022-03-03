@@ -1,11 +1,11 @@
-- name: Controller
+- name: ControllerSriov
   count: 3
   hostname_format: controller-%index%
   defaults:
     profile: control
     networks:
       - network: ctlplane
-        subnet: ctlplane_subnet
+        subnet: ctlplane-subnet
         vif: true
       - network: external
         subnet: external_subnet
@@ -22,14 +22,30 @@
       default_route_network:
         - external
 
-- name: Computesriov
+- name: Compute
   count: 0
-  hostname_format: computesriov-%index%
   defaults:
     profile: compute
     networks:
     - network: ctlplane
-      subnet: ctlplane_subnet
+      subnet: ctlplane-subnet
+      vif: true
+    - network: internalapi
+      subnet: internal_api_subnet
+    - network: tenant
+      subnet: tenant_subnet
+    - network: storage
+      subnet: storage_subnet
+    network_config:
+      template: /home/stack/nic-config/compute.j2
+
+- name: ComputeOvsDpdkSriov
+  count: 2
+  hostname_format: computeovsdpdksriov-%index%
+  defaults:
+    networks:
+    - network: ctlplane
+      subnet: ctlplane-subnet
       vif: true
     - network: internal_api
       subnet: internal_api_subnet
@@ -38,7 +54,7 @@
     - network: storage
       subnet: storage_subnet
     network_config:
-      template: /home/stack/osp17_ref/nic-configs/computesriov.j2
+      template: /home/stack/osp17_ref/nic-configs/computeovsdpdksriov.j2
     config_drive:
       cloud_config:
         ssh_pwauth: true
@@ -47,43 +63,6 @@
           list: |-
             root:12345678
         expire: False
-  ansible_playbooks:
-    - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-node-kernelargs.yaml
-      extra_vars:
-        reboot_wait_timeout: 900
-        kernel_args: 'default_hugepagesz=1GB hugepagesz=1G hugepages=32 iommu=pt intel_iommu=on isolcpus=1-11,13-23'
-        tuned_profile: 'cpu-partitioning'
-        tuned_isolated_cores: '1-11,13-23'
-    - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-node-provision.yaml
-      extra_vars:
-        reboot_wait_timeout: 900
-
-#  ComputeOvsDpdkSriovParameters:
-#    OvsDpdkSocketMemory: "4096"
-#    OvsDpdkMemoryChannels: "4"
-#    NovaReservedHostMemory: 4096
-#    OvsDpdkCoreList: "0,12"
-#    NovaVcpuPinSet: ['2-11','14-23']
-#    NovaComputeCpuSharedSet: ['0','12']
-#    OvsHandlerCores: "2"
-#    OvsRevalidatorCores: "2"
-- name: ComputeOvsDpdkSriov
-  count: 2
-  hostname_format: computeovsdpdksriov-%index%
-  defaults:
-    profile: compute
-    networks:
-      - network: ctlplane
-        subnet: ctlplane_subnet
-        vif: true
-      - network: internal_api
-        subnet: internal_api_subnet
-      - network: tenant
-        subnet: tenant_subnet
-      - network: storage
-        subnet: storage_subnet
-    network_config:
-      template: /home/stack/osp17_ref/nic-configs/computeovsdpdksriov.j2
   ansible_playbooks:
     - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-node-kernelargs.yaml
       extra_vars:

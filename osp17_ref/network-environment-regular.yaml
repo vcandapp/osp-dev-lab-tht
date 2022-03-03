@@ -1,7 +1,8 @@
 resource_registry:
-  OS::TripleO::ComputeOvsDpdkSriov::Net::SoftwareConfig: nic-configs/computeovsdpdksriov.j2
-  OS::TripleO::Controller::Net::SoftwareConfig: nic-configs/controller.j2
-  OS::TripleO::ControllerSriov::Net::SoftwareConfig: nic-configs/controller.j2
+  OS::TripleO::NodeUserData: /usr/share/openstack-tripleo-heat-templates/firstboot/os-net-config-mappings.yaml
+  OS::TripleO::ComputeOvsDpdkSriov::Net::SoftwareConfig: network/nic-configs/computeovsdpdksriov.j2
+  OS::TripleO::Controller::Net::SoftwareConfig: network/nic-configs/controller.j2
+  OS::TripleO::ControllerSriov::Net::SoftwareConfig: network/nic-configs/controller.j2
 
 parameter_defaults:
   NeutronTunnelTypes: 'geneve'

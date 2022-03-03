@@ -1,4 +1,5 @@
 - network: ctlplane
+  subnet: ctlplane-subnet
   dns_name: overcloud
 - network: storage
   dns_name: overcloud
