@@ -1,8 +1,14 @@
+
+#Templates for 17.0 are specified with parameters instead of resource_registry mapping
 resource_registry:
-  OS::TripleO::NodeUserData: /usr/share/openstack-tripleo-heat-templates/firstboot/os-net-config-mappings.yaml
-  OS::TripleO::ComputeOvsDpdkSriov::Net::SoftwareConfig: network/nic-configs/computeovsdpdksriov.j2
-  OS::TripleO::Controller::Net::SoftwareConfig: network/nic-configs/controller.j2
-  OS::TripleO::ControllerSriov::Net::SoftwareConfig: network/nic-configs/controller.j2
+  OS::TripleO::ComputeOvsDpdkSriov::Net::SoftwareConfig: OS::Heat::None
+  OS::TripleO::Controller::Net::SoftwareConfig: OS::Heat::None
+  OS::TripleO::ControllerSriov::Net::SoftwareConfig: OS::Heat::Non
+
+parameter_defaults:
+  ControllerNetworkConfigTemplate: 'nic-configs/controller.yaml'
+  ComputeNetworkConfigTemplate: 'nic-configs/computeovsdpdksriov.yaml'
+#  OS::TripleO::ControllerSriov::Net::SoftwareConfig: network/nic-configs/controller.j2
 
 parameter_defaults:
   NeutronTunnelTypes: 'geneve'
@@ -28,4 +34,3 @@ parameter_defaults:
    #ComputeOvsDpdkSriovExtraConfig:
    #  neutron::agents::ml2::sriov::resource_provider_hypervisors:
    #      "enp4s0f0:%{hiera('fqdn_canonical')},enp4s0f1:%{hiera('fqdn_canonical')}"
-
