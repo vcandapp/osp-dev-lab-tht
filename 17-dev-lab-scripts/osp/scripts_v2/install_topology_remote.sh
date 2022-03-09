@@ -76,4 +76,4 @@ NET_ARGS=" -e  override.networks.net4.ip_address=$EIP.1 -e  override.networks.ne
 cd /root/infrared
 source .venv/bin/activate
 
-infrared virsh -vv --host-address ${SERVER} --host-key ~/.ssh/id_rsa --image-url ${IMG} --host-memory-overcommit False --disk-pool /home/ -e override.controller.cpu=4 -e override.undercloud.cpu=4 -e override.controller.memory=10240 -e override.undercloud.memory=24576 ${CNTRL_ARGS} ${NET_ARGS} ${ARGS}
+infrared virsh -vv -o provision.yml --host-address ${SERVER} --host-key ~/.ssh/id_rsa --image-url ${IMG} --host-memory-overcommit False --disk-pool /home/ -e override.controller.cpu=4 -e override.undercloud.cpu=4 -e override.controller.memory=10240 -e override.undercloud.memory=24576 ${CNTRL_ARGS} ${NET_ARGS} ${ARGS}
