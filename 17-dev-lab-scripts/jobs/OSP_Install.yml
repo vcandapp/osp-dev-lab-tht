@@ -125,13 +125,6 @@ pipeline {
         }
       }
     }
-    stage('Overcloud-!!!!! TBD') {
-      when {
-        expression { return params.server != "---" }
-      }
-      steps {
-      }
-    }
   }
   post {
     always {
