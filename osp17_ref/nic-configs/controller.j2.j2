@@ -1,3 +1,5 @@
+{% raw -%}
+---
 network_config:
 - type: interface
   name: nic1
@@ -59,3 +61,8 @@ network_config:
   members:
   - type: interface
     name: nic2
+
+outputs:
+  config:
+    value: get_attr[OsNetConfigImpl, value]
+{% endraw %}
