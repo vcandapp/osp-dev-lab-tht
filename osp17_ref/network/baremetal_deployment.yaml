@@ -22,12 +22,10 @@
         - external
 
 - name: ComputeOvsDpdkSriov
-  count: 2
+  count: 1
   hostname_format: computeovsdpdksriov-%index%
   defaults:
     networks:
-    - network: ctlplane
-      vif: true
     - network: internal_api
       subnet: internal_api_subnet
     - network: tenant

@@ -6,11 +6,10 @@ resource_registry:
   OS::TripleO::ControllerSriov::Net::SoftwareConfig: OS::Heat::Non
 
 parameter_defaults:
-  ControllerNetworkConfigTemplate: 'nic-configs/controller.yaml'
-  ComputeNetworkConfigTemplate: 'nic-configs/computeovsdpdksriov.yaml'
+  ControllerNetworkConfigTemplate: '/home/stack/osp17_ref/nic-configs/controller.yaml'
+  ComputeNetworkConfigTemplate: '/home/stack/osp17_ref/nic-configs/computeovsdpdksriov.yaml'
 #  OS::TripleO::ControllerSriov::Net::SoftwareConfig: network/nic-configs/controller.j2
 
-parameter_defaults:
   NeutronTunnelTypes: 'geneve'
   NeutronNetworkType: ['geneve', 'vlan']
   NeutronEnableDVR: false

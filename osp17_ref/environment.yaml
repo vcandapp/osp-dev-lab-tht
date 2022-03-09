@@ -13,6 +13,12 @@ parameter_defaults:
   OvercloudComputeSriovFlavor: "compute"
   OvercloudComputeSriovOffloadFlavor: "compute"
 
+  ControllerSchedulerHints:
+    'capabilities:node': 'controller-%index%'
+  ComputeOvsDpdkSriovHostnameFormat: 'computeovsdpdksriov-%index%'
+  ComputeOvsDpdkSriovSchedulerHints:
+    'capabilities:node': 'compute-%index%'
+
   ControllerCount: 1
   ControllerSriovCount: 3
   ComputeOvsDpdkSriovCount: 2

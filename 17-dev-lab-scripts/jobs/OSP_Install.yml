@@ -125,12 +125,11 @@ pipeline {
         }
       }
     }
-    stage('Overcloud') {
+    stage('Overcloud-!!!!! TBD') {
       when {
         expression { return params.server != "---" }
       }
       steps {
-        sh './17-dev-lab-scripts/osp/scripts_v2/install_overcloud.sh'
       }
     }
   }
