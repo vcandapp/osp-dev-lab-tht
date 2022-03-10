@@ -36,10 +36,14 @@ dhcp_end=$(awk -F "=" '/^dhcp_end/{print $2;exit}' /root/infrared/undercloud.con
 gateway=$(awk -F "=" '/^gateway/{print $2;exit}' /root/infrared/undercloud.conf | xargs)
 inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/infrared/undercloud.conf | xargs)
 
+#Viji TBD (--build RHOS-17.0-RHEL-8-20211105.n.0) (--images-update)
+#--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
+BUILD=RHOS-17.0-RHEL-8-20211208.n.1
+
 infrared tripleo-undercloud -vv \
+    -o undercloud.yml --mirror "tlv" \
     --version $RELEASE --build=${BUILD} \
-    --images-task=rpm --images-update yes ${SSL} \
-    --repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
+    --images-task=rpm --images-update no ${SSL} \
     --config-options DEFAULT.local_ip=${local_ip} \
     --config-options DEFAULT.undercloud_public_host=${undercloud_public_host} \
     --config-options DEFAULT.undercloud_admin_host=${undercloud_admin_host} \
@@ -51,6 +55,9 @@ infrared tripleo-undercloud -vv \
     --config-options ctlplane-subnet.inspection_iprange=${inspection_iprange} \
     --config-options ctlplane-subnet.masquerade=true
 
+#--config-options DEFAULT.undercloud_timezone=UTC 
+#--tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt
+#--build RHOS-17.0-RHEL-8-20211105.n.0--tls-ca 'https://password.corp.redhat.com/RH-IT-Root-CA.crt' --boot-mode "bios"
 
 infrared ssh undercloud-0 "sudo yum install -y wget tmux vim"
 infrared ssh undercloud-0 "echo 'set-window-option -g xterm-keys on' >~/.tmux.conf"
