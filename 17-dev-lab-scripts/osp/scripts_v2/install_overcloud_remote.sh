@@ -39,5 +39,11 @@ infrared tripleo-overcloud -vv \
     --introspect=no --tagging=no --tht-roles yes --deploy=yes --overcloud-templates none \
     ${NET_BACKEND} --network-protocol ipv4 \
     --overcloud-ssl yes \
-    --deployment-files ${THT_PATH} -e provison_virsh_network_name=${UNDER_SUBNET} \
+    -e provison_virsh_network_name=br-ctlplane \
+    --deployment-files ${THT_PATH} \
     --hybrid instack.json  --overcloud-script  /root/infrared/overcloud_deploy.sh
+
+
+#-e provison_virsh_network_name=${UNDER_SUBNET} \
+#infrared tripleo-overcloud -o overcloud-install.yml
+#--vbmc-force False --vbmc-host undercloud --tagging no --deploy no --boot-mode "bios"
