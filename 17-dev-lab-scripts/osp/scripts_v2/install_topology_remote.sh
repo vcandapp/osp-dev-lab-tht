@@ -20,6 +20,7 @@ VERSION13="7.9"
 VERSION16_1="8.2.0"
 VERSION16_2="8.4"
 VERSION17_0="8.4"
+VERSION17_0_RHEL9="9.0"
 #####################################
 
 echo "Deploying OSP version $RELEASE"
@@ -34,6 +35,7 @@ echo "Deploying OSP Major (${MAJ}) and Minor (${MIN}) Version"
 
 BASE7="http://download.eng.brq.redhat.com/rhel-7/rel-eng/RHEL-7/latest-RHEL-@VERSION@/compose/Server/x86_64/images"
 BASE8="http://download.eng.brq.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-@VERSION@/compose/BaseOS/x86_64/images"
+BASE9="http://download.eng.brq.redhat.com/rhel-9/rel-eng/RHEL-9/latest-RHEL-@VERSION@/compose/BaseOS/x86_64/images"
 
 if [[ $MAJ -lt 16 ]]; then
     BASE=${BASE7/@VERSION@/$VERSION13}
@@ -48,6 +50,8 @@ elif [[ $MAJ -eq 16 ]]; then
         echo "Unsupported release - ${RELEASE}"
         exit 1
     fi
+elif [[ $MAJ -eq 17 && $SERVER -eq 'dell-r640-oss-10.lab.eng.brq.redhat.com' ]]; then
+    BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
 elif [[ $MAJ -eq 17 ]]; then
     BASE=${BASE8/@VERSION@/$VERSION17_0}
 fi
@@ -72,6 +76,8 @@ ECIDR=$(cat /root/infrared/network_data.yaml |awk 'BEGIN{RS="-";FS=""}{print}'|a
 EIP=${ECIDR%/*}
 EIP=${EIP%.*}
 NET_ARGS=" -e  override.networks.net4.ip_address=$EIP.1 -e  override.networks.net4.dhcp.range.start=$EIP.2  -e  override.networks.net4.dhcp.range.end=$EIP.100  -e  override.networks.net4.dhcp.subnet_cidr=$EIP.0/24  -e  override.networks.net4.dhcp.subnet_gateway=$EIP.1   -e  override.networks.net4.floating_ip.start=$EIP.101 -e  override.networks.net4.floating_ip.end=$EIP.151 "
+
+#IMG_URL=http://rhos-qe-mirror-tlv.usersys.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8.4.0/compose/BaseOS/x86_64/images/rhel-guest-image-8.4-992.x86_64.qcow2
 
 cd /root/infrared
 source .venv/bin/activate

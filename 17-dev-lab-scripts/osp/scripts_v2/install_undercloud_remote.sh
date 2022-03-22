@@ -39,10 +39,11 @@ inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/inf
 #Viji TBD (--build RHOS-17.0-RHEL-8-20211105.n.0) (--images-update)
 #--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
 BUILD=RHOS-17.0-RHEL-8-20211208.n.1
+BUILD=RHOS-17.0-RHEL-9-20220316.n.1
 
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "tlv" \
-    --version $RELEASE --build=${BUILD} \
+    --version $RELEASE --build ${BUILD} \
     --images-task=rpm --images-update no ${SSL} \
     --config-options DEFAULT.local_ip=${local_ip} \
     --config-options DEFAULT.undercloud_public_host=${undercloud_public_host} \
