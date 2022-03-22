@@ -33,7 +33,8 @@ network_config:
   device: nic2
   vlan_id: {{ lookup('vars', networks_lower['Tenant'] ~ '_vlan_id') }}
   addresses:
-  - ip_netmask: {{ lookup('vars', networks_lower['Tenant'] ~ '_ip') }}/{{ lookup('vars', networks_lower['StorageMgmt'] ~ '_cidr') }}
+  - ip_netmask: {{ lookup('vars', networks_lower['Tenant'] ~ '_ip') }}/{{
+    lookup('vars', networks_lower['Tenant'] ~ '_cidr') }}
 
 - type: ovs_user_bridge
   name: br-link1
