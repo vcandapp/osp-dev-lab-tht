@@ -37,7 +37,7 @@
       ip_subnet: '152.20.0.0/24'
       allocation_pools: [{'start': '152.20.0.4', 'end': '152.20.0.250'}]
       gateway_ip: '152.20.0.1'
-      vlan: 304
+      vlan: 404
       routes: [{'destination':'152.20.0.0/20', 'nexthop':'152.20.0.1'}]
   # Note that tenant tunneling is only compatible with IPv4 addressing at this time.
 - name: External
