@@ -36,7 +36,6 @@ dhcp_end=$(awk -F "=" '/^dhcp_end/{print $2;exit}' /root/infrared/undercloud.con
 gateway=$(awk -F "=" '/^gateway/{print $2;exit}' /root/infrared/undercloud.conf | xargs)
 inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/infrared/undercloud.conf | xargs)
 
-#Viji TBD (--build RHOS-17.0-RHEL-8-20211105.n.0) (--images-update)
 #--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
 BUILD=RHOS-17.0-RHEL-8-20211208.n.1
 BUILD=RHOS-17.0-RHEL-9-20220316.n.1
