@@ -42,7 +42,7 @@ BUILD=RHOS-17.0-RHEL-8-20211208.n.1
 BUILD=RHOS-17.0-RHEL-9-20220316.n.1
 
 #Viji (new 23rd Mar)
-BUILD=RHOS-17.0-RHEL-9-20220214.n.1
+BUILD=RHOS-17.0-RHEL-9-20220203.n.1
 
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "tlv" \
