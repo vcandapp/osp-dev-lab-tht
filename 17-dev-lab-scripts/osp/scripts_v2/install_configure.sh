@@ -37,8 +37,8 @@ scp ${OPT} network_data.yaml root@${server}:/root/infrared/
 scp ${OPT} network_data.yaml root@${server}:/root/infrared/${THT_PATH}/
 cp $COMMON_NET_DATA_V2 ${THT_PATH}/network_data_v2.yaml
 scp ${OPT} ${THT_PATH}/network_data_v2.yaml root@${server}:/root/infrared/${THT_PATH}/
-scp ${OPT} $COMMON_VIP_CFG root@${server}:/root/infrared/${THT_PATH}/
-scp ${OPT} $COMMON_BAREMETAL_CFG root@${server}:/root/infrared/${THT_PATH}/
+scp ${OPT} $COMMON_VIP_CFG root@${server}:/root/infrared/${THT_PATH}/network/
+scp ${OPT} $COMMON_BAREMETAL_CFG root@${server}:/root/infrared/${THT_PATH}/network/
 
 awk -v var="$VLAN_CONFIG" 'BEGIN{x=var;FS="\\n"} /NeutronNetworkVLANRanges:/{gsub("NeutronNetworkVLANRanges:.*","NeutronNetworkVLANRanges: dpdk1:"x+5":"x+10",dpdk2:"x+5":"x+10",sriov1:"x+5":"x+10",sriov2:"x+5":"x+10   )} {print}' ${THT_PATH}/network-environment.yaml > network-environment.yaml
 scp ${OPT} network-environment.yaml root@${server}:/root/infrared/${THT_PATH}

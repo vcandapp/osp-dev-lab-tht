@@ -1,13 +1,15 @@
-
 #Templates for 17.0 are specified with parameters instead of resource_registry mapping
 resource_registry:
   OS::TripleO::ComputeOvsDpdkSriov::Net::SoftwareConfig: OS::Heat::None
   OS::TripleO::Controller::Net::SoftwareConfig: OS::Heat::None
-  OS::TripleO::ControllerSriov::Net::SoftwareConfig: OS::Heat::Non
+  OS::TripleO::ControllerSriov::Net::SoftwareConfig: OS::Heat::None
+  OS::TripleO::Services::CinderBackendDellPs: OS::Heat::None
 
 parameter_defaults:
-  ControllerNetworkConfigTemplate: '/home/stack/osp17_ref/nic-configs/controller.j2'
-  ComputeNetworkConfigTemplate: '/home/stack/osp17_ref/nic-configs/computeovsdpdksriov.j2'
+        #  ControllerNetworkConfigTemplate: '/home/stack/osp17_ref/nic-configs/controller.j2'
+        #ComputeNetworkConfigTemplate: '/home/stack/osp17_ref/nic-configs/computeovsdpdksriov.j2'
+  ComputeOvsDpdkSriovNetworkConfigTemplate: '/home/stack/osp17_ref/nic-configs/computeovsdpdksriov.j2' 
+  ControllerSriovNetworkConfigTemplate : '/home/stack/osp17_ref/nic-configs/controller.j2'
 #  OS::TripleO::ControllerSriov::Net::SoftwareConfig: network/nic-configs/controller.j2
 
   NeutronTunnelTypes: 'geneve'
@@ -17,6 +19,7 @@ parameter_defaults:
   NeutronSriovAgentExtensions: "qos"
   #NeutronTunnelTypes: 'vxlan'
   #NeutronNetworkType: ['vxlan', 'vlan']
+  NeutronExternalNetworkBridge: "'br-ex'"
 
   ComputeOvsDpdkSriovParameters:
     NeutronPhysicalDevMappings: ["sriov1:eno3", "sriov2:eno4"]
@@ -28,6 +31,24 @@ parameter_defaults:
     - devname: "eno4"
       trusted: "true"
       physical_network: "sriov2"
+
+  ControllerSriovParameters:
+    # Set OVN gateway router, required for external connectivity (SR-IOV)
+    OVNCMSOptions: "enable-chassis-as-gw"
+  ############################
+  #  Scheduler configuration #
+  ############################
+  NovaSchedulerDefaultFilters:
+    - "RetryFilter"
+    - "AvailabilityZoneFilter"
+    - "ComputeFilter"
+    - "ComputeCapabilitiesFilter"
+    - "ImagePropertiesFilter"
+    - "ServerGroupAntiAffinityFilter"
+    - "ServerGroupAffinityFilter"
+    - "PciPassthroughFilter"
+    - "NUMATopologyFilter"
+    - "AggregateInstanceExtraSpecsFilter"
 
    #NeutronSriovResourceProviderBandwidths: eno3:4000000:9000000,eno4:4000000:9000000
    #ComputeOvsDpdkSriovExtraConfig:

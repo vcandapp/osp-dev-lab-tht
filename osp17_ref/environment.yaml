@@ -19,7 +19,7 @@ parameter_defaults:
   ComputeOvsDpdkSriovSchedulerHints:
     'capabilities:node': 'compute-%index%'
 
-  ControllerCount: 1
+  ControllerCount: 0
   ControllerSriovCount: 3
   ComputeOvsDpdkSriovCount: 2
   ComputeOvsDpdkCount: 0
