@@ -28,7 +28,7 @@ openstack overcloud deploy $PARAMS \
     --deployed-server \
     --baremetal-deployment /home/stack/osp17_ref/network/baremetal_deployment.yaml \
     --vip-file /home/stack/osp17_ref/network/vip_data.yaml \
-    -n /home/stack/osp17_ref/network_data_v2.yaml \
+    -n /home/stack/osp17_ref/network/network_data_v2.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/services/neutron-ovn-dpdk.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/services/neutron-ovn-sriov.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/disable-telemetry.yaml \
