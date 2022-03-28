@@ -44,6 +44,8 @@ BUILD=RHOS-17.0-RHEL-9-20220203.n.1
 BUILD=RHOS-17.0-RHEL-9-20220316.n.1
 BUILD=RHOS-17.0-RHEL-9-20220119.n.1
 
+BUILD=RHOS-17.0-RHEL-8-20220324.n.1
+
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "tlv" \
     --version $RELEASE --build ${BUILD} \
