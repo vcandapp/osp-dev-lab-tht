@@ -22,7 +22,7 @@
         - external
 
 - name: ComputeOvsDpdkSriov
-  count: 1
+  count: 2
   hostname_format: computeovsdpdksriov-%index%
   defaults:
     networks:

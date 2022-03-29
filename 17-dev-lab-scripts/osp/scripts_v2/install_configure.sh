@@ -36,7 +36,8 @@ awk -v var="$VLAN_CONFIG" 'BEGIN{x=var+1;FS="\\n"}/vlan:/{gsub(/vlan:.*/,"vlan: 
 scp ${OPT} network_data.yaml root@${server}:/root/infrared/
 scp ${OPT} network_data.yaml root@${server}:/root/infrared/${THT_PATH}/
 cp $COMMON_NET_DATA_V2 ${THT_PATH}/network_data_v2.yaml
-scp ${OPT} ${THT_PATH}/network_data_v2.yaml root@${server}:/root/infrared/${THT_PATH}/
+scp ${OPT} ${THT_PATH}/network_data_v2.yaml
+root@${server}:/root/infrared/${THT_PATH}/network/
 scp ${OPT} $COMMON_VIP_CFG root@${server}:/root/infrared/${THT_PATH}/network/
 scp ${OPT} $COMMON_BAREMETAL_CFG root@${server}:/root/infrared/${THT_PATH}/network/
 

@@ -24,7 +24,7 @@ openstack overcloud deploy $PARAMS \
     --timeout 120 \
     --stack overcloud \
     --network-config \
-    -r /home/stack//roles_data.yaml \
+    -r /home/stack/roles_data.yaml \
     --deployed-server \
     --baremetal-deployment /home/stack/osp17_ref/network/baremetal_deployment.yaml \
     --vip-file /home/stack/osp17_ref/network/vip_data.yaml \
