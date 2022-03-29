@@ -50,8 +50,9 @@ elif [[ $MAJ -eq 16 ]]; then
         echo "Unsupported release - ${RELEASE}"
         exit 1
     fi
-elif [[ $MAJ -eq 17 && $SERVER == 'dell-r640-oss-10.lab.eng.brq.redhat.com' ]]; then
-    BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
+#Viji - TBD for RHEL9
+#elif [[ $MAJ -eq 17 && $SERVER == 'dell-r640-oss-10.lab.eng.brq.redhat.com' ]]; then
+#    BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
 elif [[ $MAJ -eq 17 ]]; then
     BASE=${BASE8/@VERSION@/$VERSION17_0}
 fi
