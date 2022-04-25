@@ -66,10 +66,10 @@ infrared tripleo-undercloud -vv \
     --config-options ctlplane-subnet.gateway=${gateway} \
     --config-options ctlplane-subnet.inspection_iprange=${inspection_iprange} \
     --config-options ctlplane-subnet.masquerade=true \
-    --config-options DEFAULT.undercloud_timezone=UTC ${BOOT} ${OC_IMG}\
+    --config-options DEFAULT.undercloud_timezone=UTC ${OC_IMG} \
     --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt
 
-#--build RHOS-17.0-RHEL-8-20211105.n.0--tls-ca 'https://password.corp.redhat.com/RH-IT-Root-CA.crt' --boot-mode "bios"
+#--build RHOS-17.0-RHEL-8-20211105.n.0--tls-ca 'https://password.corp.redhat.com/RH-IT-Root-CA.crt'
 
 infrared ssh undercloud-0 "sudo yum install -y wget tmux vim"
 infrared ssh undercloud-0 "echo 'set-window-option -g xterm-keys on' >~/.tmux.conf"
