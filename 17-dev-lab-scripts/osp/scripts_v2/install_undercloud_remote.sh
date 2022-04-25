@@ -41,8 +41,16 @@ BUILD=RHOS-17.0-RHEL-8-20211208.n.1
 BUILD=RHOS-17.0-RHEL-9-20220203.n.1
 
 #Viji (new 23rd Mar)
-BUILD=RHOS-17.0-RHEL-8-20220324.n.1
+BUILD=RHOS-17.0-RHEL-8-20220401.n.1
 BUILD=RHOS-17.0-RHEL-9-20220316.n.1
+
+if [[ ${BUILD} == "RHOS-17.0-RHEL-9-20220316.n.1" ]]; then
+    BOOT=--boot-mode "bios"
+    OC_IMG=--overcloud-image-name "full"
+else
+    BOOT=--boot-mode "bios"
+    OC_IMG=--overcloud-image-name "full"
+fi
 
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "tlv" \
@@ -57,10 +65,10 @@ infrared tripleo-undercloud -vv \
     --config-options ctlplane-subnet.dhcp_end=${dhcp_end} \
     --config-options ctlplane-subnet.gateway=${gateway} \
     --config-options ctlplane-subnet.inspection_iprange=${inspection_iprange} \
-    --config-options ctlplane-subnet.masquerade=true
+    --config-options ctlplane-subnet.masquerade=true \
+    --config-options DEFAULT.undercloud_timezone=UTC ${BOOT} ${OC_IMG}\
+    --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt
 
-#--config-options DEFAULT.undercloud_timezone=UTC 
-#--tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt
 #--build RHOS-17.0-RHEL-8-20211105.n.0--tls-ca 'https://password.corp.redhat.com/RH-IT-Root-CA.crt' --boot-mode "bios"
 
 infrared ssh undercloud-0 "sudo yum install -y wget tmux vim"

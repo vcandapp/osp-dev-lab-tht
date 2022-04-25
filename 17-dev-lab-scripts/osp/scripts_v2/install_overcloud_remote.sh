@@ -34,6 +34,8 @@ else
     NET_BACKEND=' --network-ovn yes --network-ovs no --network-backend geneve '
 fi
 
+CONTAINER= --containers True
+
 infrared tripleo-overcloud -vv \
     --version ${RELEASE} \
     --introspect=no --tagging=no --tht-roles yes --deploy=yes --overcloud-templates none \
@@ -41,6 +43,7 @@ infrared tripleo-overcloud -vv \
     --overcloud-ssl yes  --vbmc-host hypervisor \
     -e provison_virsh_network_name=br-ctlplane \
     --deployment-files ${THT_PATH} \
+    --overcloud-debug yes \
     --hybrid instack.json  --overcloud-script  /root/infrared/overcloud_deploy.sh
 
 
