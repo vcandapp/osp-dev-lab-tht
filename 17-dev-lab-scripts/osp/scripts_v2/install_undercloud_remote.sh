@@ -47,9 +47,6 @@ BUILD=RHOS-17.0-RHEL-9-20220316.n.1
 if [[ ${BUILD} == "RHOS-17.0-RHEL-9-20220316.n.1" ]]; then
     BOOT=--boot-mode "bios"
     OC_IMG=--overcloud-image-name "full"
-else
-    BOOT=--boot-mode "bios"
-    OC_IMG=--overcloud-image-name "full"
 fi
 
 infrared tripleo-undercloud -vv \
@@ -66,7 +63,7 @@ infrared tripleo-undercloud -vv \
     --config-options ctlplane-subnet.gateway=${gateway} \
     --config-options ctlplane-subnet.inspection_iprange=${inspection_iprange} \
     --config-options ctlplane-subnet.masquerade=true \
-    --config-options DEFAULT.undercloud_timezone=UTC ${OC_IMG} \
+    --config-options DEFAULT.undercloud_timezone=UTC \
     --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt
 
 #--build RHOS-17.0-RHEL-8-20211105.n.0--tls-ca 'https://password.corp.redhat.com/RH-IT-Root-CA.crt'
