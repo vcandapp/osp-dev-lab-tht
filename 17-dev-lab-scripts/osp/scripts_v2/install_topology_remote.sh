@@ -51,10 +51,9 @@ elif [[ $MAJ -eq 16 ]]; then
         exit 1
     fi
 #Viji - TBD for RHEL9
-elif [[ $MAJ -eq 17 && $SERVER == 'dell-r640-oss-10.lab.eng.brq.redhat.com' ]]; then
+if [[ $MAJ -eq 17 ]]; then
     BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
-elif [[ $MAJ -eq 17 ]]; then
-    BASE=${BASE8/@VERSION@/$VERSION17_0}
+    BOOT= --boot-mode "uefi"
 fi
 
 MD5="$BASE/MD5SUM"
@@ -78,9 +77,8 @@ EIP=${ECIDR%/*}
 EIP=${EIP%.*}
 NET_ARGS=" -e  override.networks.net4.ip_address=$EIP.1 -e  override.networks.net4.dhcp.range.start=$EIP.2  -e  override.networks.net4.dhcp.range.end=$EIP.100  -e  override.networks.net4.dhcp.subnet_cidr=$EIP.0/24  -e  override.networks.net4.dhcp.subnet_gateway=$EIP.1   -e  override.networks.net4.floating_ip.start=$EIP.101 -e  override.networks.net4.floating_ip.end=$EIP.151 "
 
-#IMG_URL=http://rhos-qe-mirror-tlv.usersys.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8.4.0/compose/BaseOS/x86_64/images/rhel-guest-image-8.4-992.x86_64.qcow2
 
 cd /root/infrared
 source .venv/bin/activate
 
-infrared virsh -vv -o provision.yml --host-address ${SERVER} --host-key ~/.ssh/id_rsa --image-url ${IMG} --host-memory-overcommit False --disk-pool /home/ -e override.controller.cpu=4 -e override.undercloud.cpu=4 -e override.controller.memory=10240 -e override.undercloud.memory=24576 ${CNTRL_ARGS} ${NET_ARGS} ${ARGS}
+infrared virsh -vv -o provision.yml --host-address ${SERVER} --host-key ~/.ssh/id_rsa --image-url ${IMG} --host-memory-overcommit False --disk-pool /home/ -e override.controller.cpu=4 -e override.undercloud.cpu=4 -e override.controller.memory=10240 -e override.undercloud.memory=24576 ${CNTRL_ARGS} ${NET_ARGS} ${ARGS} ${BOOT}
