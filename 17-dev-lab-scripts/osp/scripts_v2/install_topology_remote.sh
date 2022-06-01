@@ -51,7 +51,7 @@ elif [[ $MAJ -eq 16 ]]; then
         exit 1
     fi
 #Viji - TBD for RHEL9
-if [[ $MAJ -eq 17 ]]; then
+elif [[ $MAJ -eq 17 ]]; then
     BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
     BOOT= --bootmode "uefi"
 fi
@@ -77,7 +77,6 @@ ECIDR=$(cat /root/infrared/network_data.yaml |awk 'BEGIN{RS="-";FS=""}{print}'|a
 EIP=${ECIDR%/*}
 EIP=${EIP%.*}
 NET_ARGS=" -e  override.networks.net4.ip_address=$EIP.1 -e  override.networks.net4.dhcp.range.start=$EIP.2  -e  override.networks.net4.dhcp.range.end=$EIP.100  -e  override.networks.net4.dhcp.subnet_cidr=$EIP.0/24  -e  override.networks.net4.dhcp.subnet_gateway=$EIP.1   -e  override.networks.net4.floating_ip.start=$EIP.101 -e  override.networks.net4.floating_ip.end=$EIP.151 "
-
 
 cd /root/infrared
 source .venv/bin/activate
