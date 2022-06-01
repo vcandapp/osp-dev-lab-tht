@@ -53,7 +53,7 @@ elif [[ $MAJ -eq 16 ]]; then
 #Viji - TBD for RHEL9
 if [[ $MAJ -eq 17 ]]; then
     BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
-    BOOT= --boot-mode "uefi"
+    BOOT= --bootmode "uefi"
 fi
 
 MD5="$BASE/MD5SUM"
@@ -64,6 +64,7 @@ IMG="${BASE}/${LINE}"
 # Verify if the URL is valid
 curl -s --head $IMG | grep -q "200 OK"
 echo "Base OS Image used - ${IMG}"
+echo "Boot-mode - ${BOOT}"
 ##############################################################################
 
 UCIDR=`cat /root/infrared/undercloud.conf |grep ^local_ip|awk 'BEGIN{FS=OFS="="} {print $2}'|sed "s/ //g"`
@@ -81,4 +82,7 @@ NET_ARGS=" -e  override.networks.net4.ip_address=$EIP.1 -e  override.networks.ne
 cd /root/infrared
 source .venv/bin/activate
 
-infrared virsh -vv -o provision.yml --host-address ${SERVER} --host-key ~/.ssh/id_rsa --image-url ${IMG} --host-memory-overcommit False --disk-pool /home/ -e override.controller.cpu=4 -e override.undercloud.cpu=4 -e override.controller.memory=10240 -e override.undercloud.memory=24576 ${CNTRL_ARGS} ${NET_ARGS} ${ARGS} ${BOOT}
+infrared virsh -vv -o provision.yml --host-address ${SERVER} --host-key
+~/.ssh/id_rsa --image-url ${IMG} --host-memory-overcommit False --disk-pool
+/home/ -e override.controller.cpu=4 -e override.undercloud.cpu=4 -e
+override.controller.memory=10240 -e override.undercloud.memory=24576 ${CNTRL_ARGS} ${NET_ARGS} ${ARGS} ${BOOT}
