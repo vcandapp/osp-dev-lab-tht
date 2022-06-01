@@ -53,7 +53,6 @@ elif [[ $MAJ -eq 16 ]]; then
 #Viji - TBD for RHEL9
 elif [[ $MAJ -eq 17 ]]; then
     BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
-    BOOT= --bootmode "uefi"
 fi
 
 MD5="$BASE/MD5SUM"
@@ -64,7 +63,6 @@ IMG="${BASE}/${LINE}"
 # Verify if the URL is valid
 curl -s --head $IMG | grep -q "200 OK"
 echo "Base OS Image used - ${IMG}"
-echo "Boot-mode - ${BOOT}"
 ##############################################################################
 
 UCIDR=`cat /root/infrared/undercloud.conf |grep ^local_ip|awk 'BEGIN{FS=OFS="="} {print $2}'|sed "s/ //g"`
