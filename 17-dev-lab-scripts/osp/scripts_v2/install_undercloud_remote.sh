@@ -24,7 +24,6 @@ if [[ ${RELEASE} != "13" ]]; then
     SSL="--ssl yes --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt"
     REPO="--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-9/"
     #REPO="--repos-urls http://download-node-02.eng.bos.redhat.com/rhel-8/nightly/updates/FDP/latest-FDP-8-RHEL-8/compose/Server/x86_64/os/fdp-nightly-updates.repo"
-    BOOT=--boot-mode "uefi"
 fi
 
 local_ip=$(awk -F "=" '/^local_ip/{print $2}' /root/infrared/undercloud.conf | xargs)
@@ -43,6 +42,7 @@ inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/inf
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "tlv" \
     --version $RELEASE --build ${BUILD} \
+    --boot-mode "uefi" \
     --images-task=rpm --images-update no ${SSL} \
     --config-options DEFAULT.local_ip=${local_ip} \
     --config-options DEFAULT.undercloud_public_host=${undercloud_public_host} \
