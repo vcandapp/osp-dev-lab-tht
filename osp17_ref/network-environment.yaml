@@ -6,3 +6,7 @@ parameter_defaults:
   NeutronNetworkVLANRanges: dpdk1:305:310,dpdk2:305:310,sriov1:305:307,sriov2:308:310
   NeutronFlatNetworks: 'datacentre,dpdk1,dpdk2,sriov1,sriov2'
 
+  NeutronExternalNetworkBridge: "'br-ex'"
+
+  ValidateGatewaysIcmp: false
+  ValidateControllersIcmp: false
