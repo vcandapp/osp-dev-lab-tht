@@ -22,7 +22,8 @@ REPO=""
 if [[ ${RELEASE} != "13" ]]; then
     # Facing error after installing shift-on-stack, fix it before enabling it
     SSL="--ssl yes --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt"
-    REPO="--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-9/"
+    REPO="--repos-urls
+http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-9/latest-RHOS-17-RHEL-9.0/compose/OpenStack/x86_64/os/"
     #REPO="--repos-urls http://download-node-02.eng.bos.redhat.com/rhel-8/nightly/updates/FDP/latest-FDP-8-RHEL-8/compose/Server/x86_64/os/fdp-nightly-updates.repo"
 fi
 
@@ -37,13 +38,13 @@ inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/inf
 
 #--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
 
-#BUILD=RHOS-17.0-RHEL-8-20220401.n.1
+#BUILD=RHOS-17.0-RHEL-9-20220622.n.1
 
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "tlv" \
     --version $RELEASE --build ${BUILD} \
     --boot-mode "uefi" \
-    --images-task=rpm --images-update no ${SSL} \
+    --images-task=rpm --images-update no ${SSL} ${REPO} \
     --config-options DEFAULT.local_ip=${local_ip} \
     --config-options DEFAULT.undercloud_public_host=${undercloud_public_host} \
     --config-options DEFAULT.undercloud_admin_host=${undercloud_admin_host} \

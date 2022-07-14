@@ -3,14 +3,13 @@ openstack overcloud roles generate -o $HOME/roles_data.yaml ControllerSriov Comp
 
 openstack overcloud deploy $PARAMS \
     --templates /usr/share/openstack-tripleo-heat-templates \
-    --timeout 120 --ntp-server clock1.rdu2.redhat.com \
+    --ntp-server clock1.rdu2.redhat.com \
     --stack overcloud \
-    --network-config \
     -r /home/stack/roles_data.yaml \
-    --deployed-server \
-    --baremetal-deployment /home/stack/osp17_ref/network/baremetal_deployment.yaml \
-    --vip-file /home/stack/osp17_ref/network/vip_data.yaml \
     -n /home/stack/osp17_ref/network/network_data_v2.yaml \
+    --vip-file /home/stack/osp17_ref/network/vip_data.yaml \
+    --baremetal-deployment /home/stack/osp17_ref/network/baremetal_deployment.yaml \
+    --network-config \
     -e /usr/share/openstack-tripleo-heat-templates/environments/disable-telemetry.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/debug.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/config-debug.yaml \
