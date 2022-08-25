@@ -14,11 +14,11 @@ pipeline {
       name: 'server',
       choices: [
         '---',
-        'dell-r640-oss-01.lab.eng.brq.redhat.com',
-        'dell-r640-oss-05.lab.eng.brq.redhat.com',
-        'dell-r640-oss-07.lab.eng.brq.redhat.com',
-        'dell-r640-oss-10.lab.eng.brq.redhat.com',
-        'dell-r640-oss-13.lab.eng.brq.redhat.com'
+        'dell-r640-oss-01.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-05.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-07.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-10.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-13.lab.eng.brq2.redhat.com'
       ],
       description: 'Select a cluster')
     string(name: 'beaker_user', defaultValue: 'skramaja', description: 'Beaker username')

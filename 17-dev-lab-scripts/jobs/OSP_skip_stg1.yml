@@ -8,18 +8,18 @@ def osp_rhel_list = [
 ]
 def net_config = [
     'rhos-nfv-10.lab.eng.rdu2.redhat.com': ' --topology-nodes undercloud:1,controller:1 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=em4 -e override.networks.net2.nic=em1 -e override.networks.net3.nic=em2',
-    'dell-r640-oss-01.lab.eng.brq.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
-    'dell-r640-oss-05.lab.eng.brq.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
-    'dell-r640-oss-07.lab.eng.brq.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
-    'dell-r640-oss-10.lab.eng.brq.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
-    'dell-r640-oss-13.lab.eng.brq.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4'
+    'dell-r640-oss-01.lab.eng.brq2.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
+    'dell-r640-oss-05.lab.eng.brq2.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
+    'dell-r640-oss-07.lab.eng.brq2.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
+    'dell-r640-oss-10.lab.eng.brq2.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
+    'dell-r640-oss-13.lab.eng.brq2.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4'
 ]
 def vlan_config = [
-    'dell-r640-oss-01.lab.eng.brq.redhat.com': '100',
-    'dell-r640-oss-05.lab.eng.brq.redhat.com': '200',
-    'dell-r640-oss-07.lab.eng.brq.redhat.com': '300',
-    'dell-r640-oss-10.lab.eng.brq.redhat.com': '400',
-    'dell-r640-oss-13.lab.eng.brq.redhat.com': '500'
+    'dell-r640-oss-01.lab.eng.brq2.redhat.com': '100',
+    'dell-r640-oss-05.lab.eng.brq2.redhat.com': '200',
+    'dell-r640-oss-07.lab.eng.brq2.redhat.com': '300',
+    'dell-r640-oss-10.lab.eng.brq2.redhat.com': '400',
+    'dell-r640-oss-13.lab.eng.brq2.redhat.com': '500'
 ]
 def OS_REL = osp_rhel_list[params.release]
 def IR_NET_CONFIG = net_config[params.server]
@@ -41,11 +41,11 @@ pipeline {
       name: 'server',
       choices: [
         '---',
-        'dell-r640-oss-01.lab.eng.brq.redhat.com',
-        'dell-r640-oss-05.lab.eng.brq.redhat.com',
-        'dell-r640-oss-07.lab.eng.brq.redhat.com',
-        'dell-r640-oss-10.lab.eng.brq.redhat.com',
-        'dell-r640-oss-13.lab.eng.brq.redhat.com'
+        'dell-r640-oss-01.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-05.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-07.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-10.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-13.lab.eng.brq2.redhat.com'
       ],
       description: 'Select a cluster')
     string(name: 'beaker_user', defaultValue: 'vcandapp', description: 'Beaker username')
