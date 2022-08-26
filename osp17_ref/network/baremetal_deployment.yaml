@@ -60,7 +60,7 @@
         kernel_args: 'default_hugepagesz=1GB hugepagesz=1G hugepages=32 iommu=pt intel_iommu=on isolcpus=1-11,13-23'
         tuned_profile: 'cpu-partitioning'
         tuned_isolated_cores: '1-11,13-23'
-    - playbook: /usr/share/ansible/tripleo-playbooks/cli-overloud-openvswitch-dpdk.yaml
+    - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-openvswitch-dpdk.yaml
       extra_vars:
         memory_channels: '4'
         lcore: '0,12'
