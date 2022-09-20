@@ -1,0 +1,90 @@
+---
+- name: Controller
+  count: 3
+  instances:
+    - hostname: controller-0
+      name: controller-0
+    - hostname: controller-1
+      name: controller-1
+    - hostname: controller-2
+      name: controller-2
+  defaults:
+    profile: control
+    networks:
+      - network: external
+        subnet: external_subnet
+      - network: internal_api
+        subnet: internal_api_subnet
+      - network: storage
+        subnet: storage_subnet
+      - network: storage_mgmt
+        subnet: storage_mgmt_subnet
+      - network: tenant
+        subnet: tenant_subnet
+    network_config:
+      template: /home/stack/ospd-17.0-vxlan-dpdk-sriov-ctlplane-dataplane-bonding-rt-hybrid/nic-configs/controller.yaml
+      default_route_network:
+        - external
+  ansible_playbooks:
+    - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-node-growvols.yaml
+      extra_vars:
+        growvols_args: >
+          /=8GB
+          /tmp=1GB
+          /var/log=10GB
+          /var/log/audit=1GB
+          /home=1GB
+          /srv=10GB
+          /var=100%
+
+- name: ComputeOvsDpdkSriovRT
+  count: 2
+  instances:
+    - hostname: computeovsdpdksriovrt-0
+      name: compute-0
+    - hostname: computeovsdpdksriovrt-1
+      name: compute-1
+  defaults:
+    networks:
+      - network: internal_api
+        subnet: internal_api_subnet
+      - network: tenant
+        subnet: tenant_subnet
+      - network: storage
+        subnet: storage_subnet
+    network_config:
+      template: /home/stack/osp17_ref/nic-configs/computeovsdpdksriov.j2
+    config_drive:
+      cloud_config:
+        ssh_pwauth: true
+        disable_root: false
+        chpasswd:
+          list: |-
+            root:12345678
+          expire: false
+  ansible_playbooks:
+    - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-node-kernelargs.yaml
+      extra_vars:
+        reboot_wait_timeout: 600
+        kernel_args: 'default_hugepagesz=1GB hugepagesz=1G hugepages=32 iommu=pt intel_iommu=on isolcpus=1-11,13-23'
+        tuned_profile: 'cpu-partitioning'
+        tuned_isolated_cores: '1-11,13-23'
+        defer_reboot: true
+    - playbook: /home/stack/ospd-17.0-vxlan-dpdk-sriov-ctlplane-dataplane-bonding-rt-hybrid/playbooks/fix_rt_kernel.yaml
+      extra_vars:
+        reboot_wait_timeout: 1800
+    - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-openvswitch-dpdk.yaml
+      extra_vars:
+        memory_channels: '4'
+        lcore: '0,12'
+        pmd: '1,13,2,14,3,15'
+        socket_mem: '4096'
+        disable_emc: false
+        enable_tso: false
+        revalidator: ''
+        handler: ''
+        pmd_auto_lb: false
+        pmd_load_threshold: ''
+        pmd_improvement_threshold: ''
+        pmd_rebal_interval: ''
+        nova_postcopy: true
