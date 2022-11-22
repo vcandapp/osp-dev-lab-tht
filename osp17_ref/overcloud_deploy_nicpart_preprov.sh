@@ -16,6 +16,8 @@ openstack overcloud deploy $PARAMS \
     -e /home/stack/templates/overcloud-baremetal-deployed.yaml \
     -e /home/stack/templates/overcloud-networks-deployed.yaml \
     -e /home/stack/templates/vip-deployed-environment.yaml \
+    -e
+/usr/share/openstack-tripleo-heat-templates/environments/deployed-server-environment.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/disable-telemetry.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/debug.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/config-debug.yaml \
