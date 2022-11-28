@@ -1,10 +1,15 @@
 # Sample for Cluster1 nodes with boot-mode "bios"
+# Note: openstack overcloud node configure --boot-mode "bios" $i
 
 - name: ControllerSriov
   count: 3
   hostname_format: controller-%index%
   defaults:
     profile: control
+    image:
+      href: file:///var/lib/ironic/images/overcloud-full.qcow2
+      kernel: file:///var/lib/ironic/images/overcloud-full.vmlinuz
+      ramdisk: file:///var/lib/ironic/images/overcloud-full.initrd
     networks:
       - network: ctlplane
         vif: true
