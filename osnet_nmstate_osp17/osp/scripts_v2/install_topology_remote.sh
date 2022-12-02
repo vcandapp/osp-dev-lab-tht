@@ -21,6 +21,7 @@ VERSION16_1="8.2.0"
 VERSION16_2="8.4"
 VERSION17_0="8.4"
 VERSION17_0_RHEL9="9.0"
+VERSION17_1_RHEL9_1="9.1"
 #####################################
 
 echo "Deploying OSP version $RELEASE"
@@ -50,9 +51,17 @@ elif [[ $MAJ -eq 16 ]]; then
         echo "Unsupported release - ${RELEASE}"
         exit 1
     fi
-#Viji - TBD for RHEL9
 elif [[ $MAJ -eq 17 ]]; then
-    BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
+    if [[ $MIN -eq 0 || $MIN -eq 1 ]]; then
+        if [[ $MIN -eq 0  ]]; then
+            BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
+        elif [[ $MIN -eq 1 ]]; then
+            BASE=${BASE9/@VERSION@/$VERSION17_1_RHEL9_1}
+        fi
+    else
+        echo "Unsupported release - ${RELEASE}"
+        exit 1
+    fi
 fi
 
 MD5="$BASE/MD5SUM"

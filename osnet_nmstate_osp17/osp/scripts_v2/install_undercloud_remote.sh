@@ -16,6 +16,8 @@ BUILD=$2
 cd /root/infrared
 source .venv/bin/activate
 
+echo "OSP rel. $RELEASE, build: $BUILD"
+
 SSL=""
 REPO=""
 # Use undercloud SSL only with OSP16 onwards
@@ -37,8 +39,6 @@ gateway=$(awk -F "=" '/^gateway/{print $2;exit}' /root/infrared/undercloud.conf 
 inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/infrared/undercloud.conf | xargs)
 
 #--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
-
-#BUILD=RHOS-17.0-RHEL-9-20220622.n.1
 
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "tlv" \
