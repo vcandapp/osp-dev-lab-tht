@@ -116,6 +116,16 @@ pipeline {
       }
     }
   }
+  stage('Overcloud') {
+      when {
+        expression { return params.server != "---" }
+      }
+      steps {
+        sh './osp/scripts/install_overcloud.sh'
+      }
+    }
+  }
+
   post {
     always {
       script {
