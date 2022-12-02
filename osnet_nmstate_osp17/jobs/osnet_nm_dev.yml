@@ -111,7 +111,7 @@ pipeline {
       }
       steps {
         withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
-          sh './17-dev-lab-scripts/osp/scripts_v2/install_introspect.sh'
+          sh './osnet_nmstate_osp17/osp/scripts_v2/install_introspect.sh'
         }
       }
     }

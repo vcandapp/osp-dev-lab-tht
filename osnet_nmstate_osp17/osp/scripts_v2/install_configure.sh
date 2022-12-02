@@ -5,10 +5,10 @@ set -ex
 THT_URL="${repo_url}"
 TMPL_DIR="osp${release%.*}_ref"
 CMD_FILE="overcloud_deploy_${deploy_type}.sh"
-COMMON_NET_DATA="17-dev-lab-scripts/osp/network_data_v2/${server}"
-COMMON_NET_DATA_V2="17-dev-lab-scripts/osp/network_data_v2/${server}_v2"
-COMMON_VIP_CFG="17-dev-lab-scripts/osp/network_data_v2/vip_data.yaml"
-COMMON_BAREMETAL_CFG="17-dev-lab-scripts/osp/network_data_v2/baremetal_deployment.yaml"
+COMMON_NET_DATA="osnet_nmstate_osp17osp/network_data_v2/${server}"
+COMMON_NET_DATA_V2="osnet_nmstate_osp17/osp/network_data_v2/${server}_v2"
+COMMON_VIP_CFG="osnet_nmstate_osp17/osp/network_data_v2/vip_data.yaml"
+COMMON_BAREMETAL_CFG="osnet_nmstate_osp17/osp/network_data_v2/baremetal_deployment.yaml"
 
 THT_BASE=`basename $THT_URL`
 THT_DIR="${THT_BASE%.git}"
@@ -51,6 +51,6 @@ if [ -z $ipmipass ]; then
     exit 1
 fi
 export ipmi_password=$ipmipass
-envsubst < 17-dev-lab-scripts/osp/instackenv/${server} >instack.json
+envsubst < osnet_nmstate_osp17/osp/instackenv/${server} >instack.json
 cat instack.json
 scp $OPT instack.json root@${server}:/root/infrared/

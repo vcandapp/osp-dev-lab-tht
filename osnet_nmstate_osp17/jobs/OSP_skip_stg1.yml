@@ -82,7 +82,7 @@ pipeline {
       }
       steps {
         withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
-          sh './17-dev-lab-scripts/osp/scripts_v2/install_configure.sh'
+          sh './osnet_nmstate_osp17/osp/scripts_v2/install_configure.sh'
         }
       }
     }
@@ -95,7 +95,7 @@ pipeline {
         VLAN_CONFIG = "${VLAN_CONFIG}"
       }
       steps {
-        sh './17-dev-lab-scripts/osp/scripts_v2/install_topology.sh'
+        sh './osnet_nmstate_osp17/osp/scripts_v2/install_topology.sh'
       }
     }
     stage('Undercloud') {
@@ -103,7 +103,7 @@ pipeline {
         expression { return params.server != "---" }
       }
       steps {
-        sh './17-dev-lab-scripts/osp/scripts_v2/install_undercloud.sh'
+        sh './osnet_nmstate_osp17/osp/scripts_v2/install_undercloud.sh'
       }
     }
     stage('Introspect') {
@@ -112,7 +112,7 @@ pipeline {
       }
       steps {
         withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
-          sh './17-dev-lab-scripts/osp/scripts_v2/install_introspect.sh'
+          sh './osnet_nmstate_osp17/osp/scripts_v2/install_introspect.sh'
         }
       }
     }
@@ -120,7 +120,7 @@ pipeline {
   post {
     always {
       script {
-        sh './17-dev-lab-scripts/logs/collect.sh'
+        sh './osnet_nmstate_osp17/logs/collect.sh'
       }
     }
     success {
