@@ -5,7 +5,7 @@ set -ex
 THT_URL="${repo_url}"
 TMPL_DIR="osp${release%.*}_ref"
 CMD_FILE="overcloud_deploy_${deploy_type}.sh"
-COMMON_NET_DATA="osnet_nmstate_osp17osp/network_data_v2/${server}"
+COMMON_NET_DATA="osnet_nmstate_osp17/osp/network_data_v2/${server}"
 COMMON_NET_DATA_V2="osnet_nmstate_osp17/osp/network_data_v2/${server}_v2"
 COMMON_VIP_CFG="osnet_nmstate_osp17/osp/network_data_v2/vip_data.yaml"
 COMMON_BAREMETAL_CFG="osnet_nmstate_osp17/osp/network_data_v2/baremetal_deployment.yaml"
