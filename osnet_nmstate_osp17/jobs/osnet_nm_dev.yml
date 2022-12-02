@@ -116,12 +116,21 @@ pipeline {
       }
     }
   }
-  stage('Overcloud') {
+  stage('Overcloud network pre-prov') {
       when {
         expression { return params.server != "---" }
       }
       steps {
-        sh './osp/scripts/install_overcloud.sh'
+        sh './osnet_nmstate_osp17/osp/scripts_v2/install_overcloud_netprov.sh'
+      }
+    }
+  }
+  stage('Overcloud node pre-prov') {
+      when {
+        expression { return params.server != "---" }
+      }
+      steps {
+        sh './osnet_nmstate_osp17/osp/scripts_v2/install_overcloud.sh'
       }
     }
   }
