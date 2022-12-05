@@ -115,7 +115,6 @@ pipeline {
         }
       }
     }
-    }
     stage('Overcloud node pre-prov') {
       when {
         expression { return params.server != "---" }
