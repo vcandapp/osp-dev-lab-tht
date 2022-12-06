@@ -17,6 +17,7 @@ if [ -d "${THT_DIR}" ]; then
 fi
 
 # Cloning to jenkins workspace folder
+Echo "Cloning OSP templates $THT_URL"
 git clone --depth=1 $THT_URL
 
 OPT="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
