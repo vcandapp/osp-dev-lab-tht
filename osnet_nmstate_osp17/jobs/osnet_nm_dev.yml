@@ -67,8 +67,8 @@ pipeline {
         expression { return params.server != "---" && !params.baremetal }
       }
       steps {
-        sh './osnet_nmstate_osp17/osp/scripts_v2/baremetal_configure.sh'
-        sh './osnet_nmstate_osp17/osp/scripts_v2/install_clean.sh'
+        #sh './osnet_nmstate_osp17/osp/scripts_v2/baremetal_configure.sh'
+        #sh './osnet_nmstate_osp17/osp/scripts_v2/install_clean.sh'
       }
     }
     stage('Setup') {
@@ -81,7 +81,7 @@ pipeline {
       }
       steps {
         withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
-          sh './osnet_nmstate_osp17/osp/scripts_v2/install_configure.sh'
+          #sh './osnet_nmstate_osp17/osp/scripts_v2/install_configure.sh'
         }
       }
     }
@@ -94,7 +94,7 @@ pipeline {
         VLAN_CONFIG = "${VLAN_CONFIG}"
       }
       steps {
-        sh './osnet_nmstate_osp17/osp/scripts_v2/install_topology.sh'
+        #sh './osnet_nmstate_osp17/osp/scripts_v2/install_topology.sh'
       }
     }
     stage('Undercloud') {
@@ -102,7 +102,7 @@ pipeline {
         expression { return params.server != "---" }
       }
       steps {
-        sh './osnet_nmstate_osp17/osp/scripts_v2/install_undercloud.sh'
+        #sh './osnet_nmstate_osp17/osp/scripts_v2/install_undercloud.sh'
       }
     }
     stage('Introspect') {
@@ -111,7 +111,7 @@ pipeline {
       }
       steps {
         withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
-          sh './osnet_nmstate_osp17/osp/scripts_v2/install_introspect.sh'
+          #sh './osnet_nmstate_osp17/osp/scripts_v2/install_introspect.sh'
         }
       }
     }
