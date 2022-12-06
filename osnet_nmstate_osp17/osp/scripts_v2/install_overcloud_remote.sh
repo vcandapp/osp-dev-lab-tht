@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PARAMS="$*"
-USER_THT="$HOME/osp17_ref"
+RELEASE=$1
 
 #mkdir -p mount_image
 #guestmount -a overcloud-hardened-uefi-full.raw -i --rw mount_image
@@ -17,15 +17,10 @@ USER_THT="$HOME/osp17_ref"
 
 
 echo "Pre-provision node...."
+echo "Deploying OSP version ${RELEASE}"
 
-infrared tripleo-overcloud -vv --version 
-    --version $RELEASE \
-    --introspect=no --tagging=no \
-    --tht-roles yes --deploy=yes \
-    --overcloud-templates none --network-ovn yes \
-    --network-ovs no --network-backend geneve \
-    --network-protocol ipv4 --overcloud-ssl yes \
-    --deployment-files osp-dev-lab-tht/osp17_ref \
-    -e provison_virsh_network_name=ctlplane-subnet \
-    --hybrid instack.json \
-    --overcloud-script /root/infrared/overcloud_deploy.sh
+cd /root/infrared/
+source .venv/bin/activate
+
+infrared tripleo-overcloud -o overcloud-install.yml --version 17.1 --deployment-files /root/infrared/osp-dev-lab-tht/osp17_ref  --overcloud-templates none --storage-backend lvm --overcloud-ssl no --network-backend vxlan --network-protocol ipv4 --network-bgpvpn no  --network-dvr no  --network-l2gw no --storage-external no --splitstack no --overcloud-debug yes  --overcloud-fencing no  --introspect no  --tagging no --tht-roles yes --deploy yes  --containers True --hybrid instack.json -e provison_virsh_network_name=br-ctlplane  --overcloud-script /root/infrared/overcloud_deploy.sh --collect-ansible-facts False --ntp-pool clock.corp.redhat.com
+
