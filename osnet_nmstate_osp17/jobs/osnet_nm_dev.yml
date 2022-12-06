@@ -48,19 +48,7 @@ pipeline {
     booleanParam(name: 'hasparent',  defaultValue: false, description: 'Hidden')
   }
   stages {
-    stage('Baremetal') {
-    }
-    stage('Configure Hypervisor') {
-    }
-    stage('Setup') {
-    }
-    stage('Topology') {
-    }
-    stage('Undercloud') {
-    }
-    stage('Introspect') {
-    }
-    stage('Overcloud node pre-prov') {
+    stage('Overcloud node prov') {
       when {
         expression { return params.server != "---" }
       }
