@@ -22,8 +22,8 @@ OPT="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 echo "Cloning OSP templates $THT_URL"
 ssh ${OPT} root@${server} "cd infrared/;rm -rf ${THT_DIR}; git clone $THT_URL"
 
-cp ${THT_PATH}/${CMD_FILE} overcloud_deploy.sh
-scp $OPT overcloud_deploy.sh  root@${server}:/root/infrared/
+ssh ${OPT} root@${server} "cp ${THT_PATH}/${CMD_FILE} /root/infrared/overcloud_deploy.sh
+#scp $OPT overcloud_deploy.sh  root@${server}:/root/infrared/
 
 scp $OPT osnet_nmstate_osp17/osp/scripts_v2/install_overcloud_remote.sh root@${server}:/root/
 CMD="bash /root/install_overcloud_remote.sh ${release} ${THT_PATH}"
