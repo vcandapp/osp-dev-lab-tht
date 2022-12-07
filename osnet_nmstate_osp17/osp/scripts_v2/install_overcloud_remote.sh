@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 PARAMS="$*"
 RELEASE=$1
 

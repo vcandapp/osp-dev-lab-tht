@@ -16,11 +16,11 @@ if [ -d "${THT_DIR}" ]; then
     rm -rf /root/infrared/${THT_DIR}
 fi
 
+OPT="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+
 # Cloning to jenkins workspace folder
 echo "Cloning OSP templates $THT_URL"
 ssh ${OPT} root@${server} "cd infrared/;rm -rf ${THT_DIR}; git clone $THT_URL"
-
-OPT="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
 cp ${THT_PATH}/${CMD_FILE} overcloud_deploy.sh
 scp $OPT overcloud_deploy.sh  root@${server}:/root/infrared/
