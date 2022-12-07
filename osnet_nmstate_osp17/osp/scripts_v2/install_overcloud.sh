@@ -24,6 +24,7 @@ ssh ${OPT} root@${server} "cd infrared/;rm -rf ${THT_DIR}; git clone $THT_URL"
 
 ssh ${OPT} root@${server} "cd infrared/;cp ${THT_PATH}/${CMD_FILE} overcloud_deploy.sh"
 #scp $OPT overcloud_deploy.sh  root@${server}:/root/infrared/
+ssh stack@undercloud-0 "rm -rf /home/stack/templates"
 
 scp $OPT osnet_nmstate_osp17/osp/scripts_v2/install_overcloud_remote.sh root@${server}:/root/
 CMD="bash /root/install_overcloud_remote.sh ${release} ${THT_PATH}"
