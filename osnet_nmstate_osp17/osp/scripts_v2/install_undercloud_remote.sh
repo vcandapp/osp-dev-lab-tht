@@ -41,7 +41,7 @@ inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/inf
 #--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
 
 infrared tripleo-undercloud -vv \
-    -o undercloud.yml --mirror "tlv" \
+    -o undercloud.yml --mirror "brq" \
     --version $RELEASE --build ${BUILD} \
     --boot-mode "uefi" \
     --images-task=rpm --images-update no ${SSL} ${REPO} \
