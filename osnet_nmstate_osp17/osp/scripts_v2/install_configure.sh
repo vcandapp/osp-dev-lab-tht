@@ -9,7 +9,7 @@ CMD_FILE="overcloud_deploy_${deploy_type}.sh"
 COMMON_NET_DATA="osnet_nmstate_osp17/osp/network_data_v2/${server}"
 COMMON_NET_DATA_V2="osnet_nmstate_osp17/osp/network_data_v2/${server}_v2"
 COMMON_VIP_CFG="osnet_nmstate_osp17/osp/network_data_v2/vip_data.yaml"
-COMMON_BAREMETAL_CFG="osnet_nmstate_osp17/osp/network_data_v2/baremetal_deployment.yaml"
+COMMON_BAREMETAL_CFG="osnet_nmstate_osp17/nmstate_scripts/baremetal_deployment_${deploy_type}.yaml"
 
 THT_BASE=`basename $THT_URL`
 THT_DIR="${THT_BASE%.git}"
@@ -33,13 +33,13 @@ scp ${OPT} overcloud_deploy.sh root@${server}:/root/infrared/
 ssh ${OPT} root@${server} "cd infrared/;rm -rf ${THT_DIR}; git clone $THT_URL"
 
 cp $COMMON_NET_DATA ${THT_PATH}/network_data.yaml
-awk -v var="$VLAN_CONFIG" 'BEGIN{x=var+1;FS="\\n"}/vlan:/{gsub(/vlan:.*/,"vlan: "x++)} {print}' ${THT_PATH}/network_data.yaml > network_data.yaml
+awk -v var="$VLAN_CONFIG" 'BEGIN{x=var+1;FS="\\n"}/vlan:/{gsub(/vlan:.*/,"vlan: "x++)} {print}' ${COMMON_NET_DATA} > network_data.yaml
 scp ${OPT} network_data.yaml root@${server}:/root/infrared/
-scp ${OPT} network_data.yaml root@${server}:/root/infrared/${THT_PATH}/
-cp $COMMON_NET_DATA_V2 ${THT_PATH}/network_data_v2.yaml
-scp ${OPT} ${THT_PATH}/network_data_v2.yaml root@${server}:/root/infrared/${THT_PATH}/network/
+#scp ${OPT} network_data.yaml root@${server}:/root/infrared/${THT_PATH}/
+cp $COMMON_NET_DATA_V2 ${THT_PATH}/network/network_data_v2.yaml
+scp ${OPT} ${COMMON_NET_DATA_V2} root@${server}:/root/infrared/${THT_PATH}/network/
 scp ${OPT} $COMMON_VIP_CFG root@${server}:/root/infrared/${THT_PATH}/network/
-scp ${OPT} $COMMON_BAREMETAL_CFG root@${server}:/root/infrared/${THT_PATH}/network/
+scp ${OPT} $COMMON_BAREMETAL_CFG root@${server}:/root/infrared/${THT_PATH}/network/baremetal_deployment.yaml
 
 awk -v var="$VLAN_CONFIG" 'BEGIN{x=var;FS="\\n"} /NeutronNetworkVLANRanges:/{gsub("NeutronNetworkVLANRanges:.*","NeutronNetworkVLANRanges: dpdk1:"x+5":"x+10",dpdk2:"x+5":"x+10",sriov1:"x+5":"x+10",sriov2:"x+5":"x+10   )} {print}' ${THT_PATH}/network-environment.yaml > network-environment.yaml
 scp ${OPT} network-environment.yaml root@${server}:/root/infrared/${THT_PATH}
