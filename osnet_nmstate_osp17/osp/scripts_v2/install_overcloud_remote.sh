@@ -17,8 +17,8 @@ RELEASE=$1
 #vi nmstate/objects.py
 #virt-customize -a overcloud-hardened-uefi-full.qcow2 --upload nmstate/objects.py:/usr/lib/python3.9/site-packages/os_net_config/objects.py
 
-yes|ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
-cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+#yes|ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
+#cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 
 echo "Pre-provision node...."
 echo "Deploying OSP version ${RELEASE}"

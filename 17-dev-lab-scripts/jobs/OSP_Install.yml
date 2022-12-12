@@ -125,6 +125,16 @@ pipeline {
         }
       }
     }
+    stage('OvercloudDeploy') {
+      when {
+        expression { return params.server != "---" }
+      }
+      steps {
+        withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
+          sh './17-dev-lab-scripts/osp/scripts_v2/install_overcloud.sh'
+        }
+      }
+    }
   }
   post {
     always {

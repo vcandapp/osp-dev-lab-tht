@@ -36,15 +36,7 @@ fi
 
 CONTAINER= --containers True
 
-infrared tripleo-overcloud -vv \
-    --version ${RELEASE} \
-    --introspect=no --tagging=no --tht-roles yes --deploy=yes --overcloud-templates none \
-    ${NET_BACKEND} --network-protocol ipv4 \
-    --overcloud-ssl yes  --vbmc-host hypervisor \
-    -e provison_virsh_network_name=br-ctlplane \
-    --deployment-files ${THT_PATH} \
-    --overcloud-debug yes \
-    --hybrid instack.json  --overcloud-script  /root/infrared/overcloud_deploy.sh
+infrared tripleo-overcloud -o overcloud-install.yml --version ${RELEASE} --deployment-files 17-dev-lab-scripts/osp17_ref  --overcloud-templates none --overcloud-ssl no ${NET_BACKEND} --network-protocol ipv4 --network-bgpvpn no  --network-dvr no  --network-l2gw no --storage-external no --splitstack no --overcloud-debug yes --overcloud-fencing no  --introspect no  --tagging no --tht-roles yes --deploy yes  --containers True --hybrid instack.json -e provison_virsh_network_name=br-ctlplane  --overcloud-script /root/infrared/overcloud_deploy.sh --collect-ansible-facts False --ntp-pool clock.corp.redhat.com,clock1.rdu2.redhat.com,google.com
 
 
 #-e provison_virsh_network_name=${UNDER_SUBNET} \
