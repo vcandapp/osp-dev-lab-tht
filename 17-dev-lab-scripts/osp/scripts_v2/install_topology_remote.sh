@@ -76,7 +76,14 @@ EIP=${ECIDR%/*}
 EIP=${EIP%.*}
 NET_ARGS=" -e  override.networks.net4.ip_address=$EIP.1 -e  override.networks.net4.dhcp.range.start=$EIP.2  -e  override.networks.net4.dhcp.range.end=$EIP.100  -e  override.networks.net4.dhcp.subnet_cidr=$EIP.0/24  -e  override.networks.net4.dhcp.subnet_gateway=$EIP.1   -e  override.networks.net4.floating_ip.start=$EIP.101 -e  override.networks.net4.floating_ip.end=$EIP.151 "
 
+if [[ $SERVER == "dell-r640-oss-01.lab.eng.brq2.redhat.com" ]]; then
+    BOOT_MODE="bios"
+else
+    BOOT_MODE="uefi"
+fi
+echo "Setting boot mode ($BOOT_MODE) for ($SERVER)"
+
 cd /root/infrared
 source .venv/bin/activate
 
-infrared virsh -vv -o provision.yml --host-address ${SERVER} --host-key ~/.ssh/id_rsa --image-url ${IMG} --host-memory-overcommit False --disk-pool /home/ -e override.controller.cpu=4 -e override.undercloud.cpu=4 -e override.controller.memory=10240 -e override.undercloud.memory=24576 ${CNTRL_ARGS} ${NET_ARGS} ${ARGS} --bootmode "uefi"
+infrared virsh -vv -o provision.yml --host-address ${SERVER} --host-key ~/.ssh/id_rsa --image-url ${IMG} --host-memory-overcommit False --disk-pool /home/ -e override.controller.cpu=4 -e override.undercloud.cpu=4 -e override.controller.memory=10240 -e override.undercloud.memory=24576 ${CNTRL_ARGS} ${NET_ARGS} ${ARGS} --bootmode ${BOOT_MODE}

@@ -5,13 +5,14 @@
 
 set -ex
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
     echo "ERROR: Invalid Arguments"
     exit 1
 fi
 
 RELEASE=$1
 BUILD=$2
+SERVER=$3
 
 cd /root/infrared
 source .venv/bin/activate
@@ -39,11 +40,17 @@ inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/inf
 #--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
 
 #BUILD=RHOS-17.0-RHEL-9-20220622.n.1
+if [[ $SERVER == "dell-r640-oss-01.lab.eng.brq2.redhat.com" ]]; then
+    BOOT_MODE="bios "
+else
+    BOOT_MODE="uefi "
+fi
+echo "Setting boot mode ($BOOT_MODE) for ($SERVER)"
 
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "tlv" \
     --version $RELEASE --build ${BUILD} \
-    --boot-mode "uefi" \
+    --boot-mode ${BOOT_MODE} \
     --images-task=rpm --images-update no ${SSL} ${REPO} \
     --config-options DEFAULT.local_ip=${local_ip} \
     --config-options DEFAULT.undercloud_public_host=${undercloud_public_host} \
