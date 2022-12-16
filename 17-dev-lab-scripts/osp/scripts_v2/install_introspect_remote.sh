@@ -15,9 +15,9 @@ THT_PATH=$2
 SERVER=$3
 
 if [[ $SERVER == "dell-r640-oss-01.lab.eng.brq2.redhat.com" ]]; then
-    BOOT_MODE='"bios"'
+    BOOT_MODE='bios'
 else
-    BOOT_MODE='"uefi"'
+    BOOT_MODE='uefi'
 fi
 echo "Setting boot mode ($BOOT_MODE) for ($SERVER)"
 
