@@ -20,6 +20,14 @@
       template: /home/stack/osp17_ref/nic-configs/controller.j2
       default_route_network:
         - external
+    config_drive:
+      cloud_config:
+        ssh_pwauth: true
+        disable_root: false
+        chpasswd:
+          list: |-
+            root:12345678
+        expire: False
   ansible_playbooks:
     - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-node-growvols.yaml
       extra_vars:
