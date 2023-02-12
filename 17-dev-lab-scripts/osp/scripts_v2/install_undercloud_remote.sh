@@ -5,13 +5,14 @@
 
 set -ex
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
     echo "ERROR: Invalid Arguments"
     exit 1
 fi
 
 RELEASE=$1
 BUILD=$2
+SERVER=$3
 
 cd /root/infrared
 source .venv/bin/activate
