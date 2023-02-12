@@ -76,11 +76,8 @@ EIP=${ECIDR%/*}
 EIP=${EIP%.*}
 NET_ARGS=" -e  override.networks.net4.ip_address=$EIP.1 -e  override.networks.net4.dhcp.range.start=$EIP.2  -e  override.networks.net4.dhcp.range.end=$EIP.100  -e  override.networks.net4.dhcp.subnet_cidr=$EIP.0/24  -e  override.networks.net4.dhcp.subnet_gateway=$EIP.1   -e  override.networks.net4.floating_ip.start=$EIP.101 -e  override.networks.net4.floating_ip.end=$EIP.151 "
 
-if [[ $SERVER == "dell-r640-oss-01.lab.eng.brq2.redhat.com" ]]; then
-    BOOT_MODE="bios"
-else
-    BOOT_MODE="uefi"
-fi
+BOOT_MODE="uefi"
+
 echo "Setting boot mode ($BOOT_MODE) for ($SERVER)"
 
 cd /root/infrared

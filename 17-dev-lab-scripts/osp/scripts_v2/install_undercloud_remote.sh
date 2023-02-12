@@ -19,14 +19,30 @@ source .venv/bin/activate
 
 SSL=""
 REPO=""
+
+echo "Deploying OSP version $RELEASE"
+MAJ=${RELEASE%.*}
+if echo $RELEASE | grep -qe '\.' ; then
+    MIN=${RELEASE#*.}
+else
+    MIN=""
+fi
+
+echo "Deploying OSP Major (${MAJ}) and Minor (${MIN}) Version"
+
 # Use undercloud SSL only with OSP16 onwards
 if [[ ${RELEASE} != "13" ]]; then
     # Facing error after installing shift-on-stack, fix it before enabling it
     SSL="--ssl yes --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt"
-    REPO="--repos-urls
+    if [[ ${RELEASE} == "17" ]]; then
+        REPO="--repos-urls
 http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-9/latest-RHOS-17-RHEL-9.0/compose/OpenStack/x86_64/os/"
-    #REPO="--repos-urls http://download-node-02.eng.bos.redhat.com/rhel-8/nightly/updates/FDP/latest-FDP-8-RHEL-8/compose/Server/x86_64/os/fdp-nightly-updates.repo"
+    elif [[ ${RELEASE} == "16" ]]; then
+        REPO="--repos-urls
+http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/16.0-RHEL-8/latest-RHOS-16-RHEL-8.0/compose/OpenStack/x86_64/os/"
+    fi
 fi
+
 
 local_ip=$(awk -F "=" '/^local_ip/{print $2}' /root/infrared/undercloud.conf | xargs)
 undercloud_public_host=$(awk -F "=" '/^undercloud_public_host/{print $2}' /root/infrared/undercloud.conf | xargs)
@@ -39,12 +55,8 @@ inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/inf
 
 #--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
 
-#BUILD=RHOS-17.0-RHEL-9-20220622.n.1
-if [[ $SERVER == "dell-r640-oss-01.lab.eng.brq2.redhat.com" ]]; then
-    BOOT_MODE="bios "
-else
-    BOOT_MODE="uefi "
-fi
+BOOT_MODE="uefi "
+
 echo "Setting boot mode ($BOOT_MODE) for ($SERVER)"
 
 infrared tripleo-undercloud -vv \
