@@ -1,3 +1,0 @@
-# For OvS-DPDK Perf deployment use tenant network from additional mellanox interface for cluster5 only
-resource_registry:
-  OS::TripleO::ComputeOvsDpdk::Net::SoftwareConfig: nic-configs/computeovsdpdk-brq-c5.yaml

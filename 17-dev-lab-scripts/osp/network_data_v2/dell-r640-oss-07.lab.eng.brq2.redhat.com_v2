@@ -7,7 +7,7 @@
       ip_subnet: '152.20.16.0/24'
       allocation_pools: [{'start': '152.20.16.4', 'end': '152.20.16.250'}]
       gateway_ip: '152.20.16.1'
-      vlan: 301
+      vlan: 302
       routes: [{'destination':'152.20.16.0/20', 'nexthop':'152.20.16.1'}]
 - name: StorageMgmt
   name_lower: storage_mgmt
@@ -17,7 +17,7 @@
       ip_subnet: '152.20.48.0/24'
       allocation_pools: [{'start': '152.20.48.4', 'end': '152.20.48.250'}]
       gateway_ip: '152.20.48.1'
-      vlan: 302
+      vlan: 303
       routes: [{'destination':'152.20.48.0/20', 'nexthop':'152.20.48.1'}]
 - name: InternalApi
   name_lower: internal_api
@@ -27,7 +27,7 @@
       ip_subnet: '152.20.32.0/24'
       allocation_pools: [{'start': '152.20.32.4', 'end': '152.20.32.250'}]
       gateway_ip: '152.20.32.1'
-      vlan: 303
+      vlan: 301
       routes: [{'destination':'152.20.32.0/20', 'nexthop':'152.20.32.1'}]
 - name: Tenant
   vip: false  # Tenant networks do not use VIPs
@@ -45,6 +45,6 @@
   name_lower: external
   subnets:
     external_subnet:
-      ip_subnet: '172.21.0.0/24'
-      allocation_pools: [{'start': '172.21.0.201', 'end': '172.21.0.206'}]
-      gateway_ip: '172.21.0.1'
+      ip_subnet: '172.22.0.0/24'
+      allocation_pools: [{'start': '172.22.0.201', 'end': '172.22.0.206'}]
+      gateway_ip: '172.22.0.1'

@@ -17,7 +17,7 @@
       - network: tenant
         subnet: tenant_subnet
     network_config:
-      template: /home/stack/osp17_ref/nic-configs/controller.j2
+      template: /home/stack/osp17_ref/nic-configs/controller.yaml
       default_route_network:
         - external
     config_drive:
@@ -32,16 +32,16 @@
     - playbook: /usr/share/ansible/tripleo-playbooks/cli-overcloud-node-growvols.yaml
       extra_vars:
         growvols_args: >
-          /=8GB
+          /=7GB
           /tmp=1GB
-          /var/log=3GB
+          /var/log=2GB
           /var/log/audit=1GB
           /home=1GB
-          /srv=10GB
-          /var=100%
+          /srv=30%
+          /var=70%
 
 - name: ComputeOvsDpdkSriov
-  count: 2
+  count: 1
   hostname_format: computeovsdpdksriov-%index%
   defaults:
     networks:
@@ -52,7 +52,7 @@
     - network: storage
       subnet: storage_subnet
     network_config:
-      template: /home/stack/osp17_ref/nic-configs/computeovsdpdksriov.j2
+      template: /home/stack/osp17_ref/nic-configs/computeovsdpdksriov.yaml
     config_drive:
       cloud_config:
         ssh_pwauth: true

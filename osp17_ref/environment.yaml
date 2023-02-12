@@ -21,7 +21,7 @@ parameter_defaults:
 
   ControllerCount: 0
   ControllerSriovCount: 3
-  ComputeOvsDpdkSriovCount: 2
+  ComputeOvsDpdkSriovCount: 1
   ComputeOvsDpdkCount: 0
   ComputeSriovCount: 0
   ComputeSriovOffloadCount: 0
@@ -30,3 +30,7 @@ parameter_defaults:
   #TimeZone: Kolkata
   SshServerOptions:
     UseDns: 'no'
+
+  NtpPool: clock.corp.redhat.com
+  MinPoll: 4
+  MaxPoll: 5

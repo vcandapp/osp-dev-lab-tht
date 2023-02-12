@@ -17,7 +17,7 @@
 - name: InternalApi
   name_lower: internal_api
   vip: true
-  vlan: 204
+  vlan: 201
   ip_subnet: '152.20.32.0/24'
   gateway_ip: '152.20.32.1'
   routes: [{'destination':'152.20.32.0/20', 'nexthop':'152.20.32.1'}]
@@ -25,7 +25,7 @@
 - name: Tenant
   vip: false  # Tenant networks do not use VIPs
   name_lower: tenant
-  vlan: 205
+  vlan: 204
   ip_subnet: '152.20.0.0/24'
   gateway_ip: '152.20.0.1'
   routes: [{'destination':'152.20.0.0/20', 'nexthop':'152.20.0.1'}]

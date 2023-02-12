@@ -17,9 +17,6 @@ THT_PATH=$2
 #THT_URL="${repo_url}"
 #TMPL_DIR="osp${release%.*}_ref"
 
-#THT_BASE=`basename $THT_URL`
-#THT_DIR="${THT_BASE%.git}"
-
 cd /root/infrared
 source .venv/bin/activate
 
@@ -36,14 +33,6 @@ fi
 
 CONTAINER= --containers True
 
-if [[ $SERVER == "dell-r640-oss-01.lab.eng.brq2.redhat.com" ]]; then
-    BOOT_MODE='bios'
-else
-    BOOT_MODE='uefi'
-fi
+BOOT_MODE='uefi'
 
 infrared tripleo-overcloud -o overcloud-install.yml --version ${RELEASE} --deployment-files 17-dev-lab-scripts/osp17_ref  --overcloud-templates none --overcloud-ssl no ${NET_BACKEND} --network-protocol ipv4 --network-bgpvpn no --network-dvr no  --network-l2gw no --storage-external no --splitstack no --overcloud-debug yes --overcloud-fencing no  --introspect no  --tagging no --tht-roles yes --deploy yes  --containers True --hybrid instack.json --boot-mode ${BOOT_MODE} -e provison_virsh_network_name=br-ctlplane  --overcloud-script /root/infrared/overcloud_deploy.sh --collect-ansible-facts False --ntp-pool clock.corp.redhat.com,clock1.rdu2.redhat.com,google.com
-
-#-e provison_virsh_network_name=${UNDER_SUBNET} \
-#infrared tripleo-overcloud -o overcloud-install.yml
-#--vbmc-force False --vbmc-host undercloud --tagging no --deploy no --boot-mode "bios"

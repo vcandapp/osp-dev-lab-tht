@@ -24,6 +24,8 @@ parameter_defaults:
   ValidateGatewaysIcmp: false
   ValidateControllersIcmp: false
 
+  EnableVLANTransparency: true
+
   ComputeOvsDpdkSriovParameters:
     NeutronPhysicalDevMappings: ["sriov1:eno3", "sriov2:eno4"]
 

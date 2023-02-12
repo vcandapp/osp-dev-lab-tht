@@ -14,11 +14,8 @@ RELEASE=$1
 THT_PATH=$2
 SERVER=$3
 
-if [[ $SERVER == "dell-r640-oss-01.lab.eng.brq2.redhat.com" ]]; then
-    BOOT_MODE='bios'
-else
-    BOOT_MODE='uefi'
-fi
+BOOT_MODE='uefi'
+
 echo "Setting boot mode ($BOOT_MODE) for ($SERVER)"
 
 echo "Deploying OSP version ${REALEASE}"

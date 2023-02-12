@@ -1,4 +1,6 @@
 ---
+{% raw %}
+
 network_config:
 - type: interface
   name: nic1
@@ -51,6 +53,8 @@ network_config:
   numvfs: 8
   use_dhcp: false
   defroute: false
-  nm_controlled: true
+  nm_controlled: false
   hotplug: true
   promisc: false
+
+{% endraw %}
