@@ -5,7 +5,7 @@
 
 set -ex
 
-if [ "$#" -ne 4 ]; then
+if [ "$#" -ne 3 ]; then
     echo "ERROR: Invalid Arguments"
     exit 1
 fi
@@ -29,7 +29,6 @@ if [[ ${RELEASE} != "13" ]]; then
 http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-9/latest-RHOS-17-RHEL-9.0/compose/OpenStack/x86_64/os/"
     #REPO="--repos-urls http://download-node-02.eng.bos.redhat.com/rhel-8/nightly/updates/FDP/latest-FDP-8-RHEL-8/compose/Server/x86_64/os/fdp-nightly-updates.repo"
 fi
-REPO="--repos-url $4 "
 
 local_ip=$(awk -F "=" '/^local_ip/{print $2}' /root/infrared/undercloud.conf | xargs)
 undercloud_public_host=$(awk -F "=" '/^undercloud_public_host/{print $2}' /root/infrared/undercloud.conf | xargs)
