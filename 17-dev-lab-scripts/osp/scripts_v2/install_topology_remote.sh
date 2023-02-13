@@ -50,7 +50,6 @@ elif [[ $MAJ -eq 16 ]]; then
         echo "Unsupported release - ${RELEASE}"
         exit 1
     fi
-#Viji - TBD for RHEL9
 elif [[ $MAJ -eq 17 ]]; then
     BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
 fi
@@ -60,6 +59,11 @@ LINE=$(curl -s $MD5 | grep 'guest-image')
 LINE=${LINE%:*}
 LINE=${LINE#\# }
 IMG="${BASE}/${LINE}"
+
+if [[ $MAJ -eq 17 ]]; then
+IMG="http://rhos-qe-mirror-tlv.usersys.redhat.com/rhel-9/nightly/RHEL-9/RHEL-9.2.0-20230207.8/compose/BaseOS/x86_64/images/rhel-guest-image-9.2-20230207.8.x86_64.qcow2"
+fi
+
 # Verify if the URL is valid
 curl -s --head $IMG | grep -q "200 OK"
 echo "Base OS Image used - ${IMG}"
