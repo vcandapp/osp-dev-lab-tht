@@ -23,4 +23,4 @@ echo "Deploying OSP version ${REALEASE}"
 cd /root/infrared/
 source .venv/bin/activate
 
-infrared tripleo-overcloud -vv -o prepare_instack.yml --version ${RELEASE} --introspect=yes --tagging=yes --deploy=no --deployment-files ${THT_PATH} -e provison_virsh_network_name=br-ctlplane --hybrid instack.json --vbmc-host hypervisor  --boot-mode ${BOOT_MODE}
+infrared tripleo-overcloud -vv -o prepare_instack.yml --version ${RELEASE} --introspect=yes --tagging=yes --deploy=no --deployment-files ${THT_PATH} -e provison_virsh_network_name=br-ctlplane --hybrid instack.json --vbmc-host hypervisor --deployment-timeout 15  --boot-mode ${BOOT_MODE}
