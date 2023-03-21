@@ -17,7 +17,7 @@
 - name: InternalApi
   name_lower: internal_api
   vip: true
-  vlan: 504
+  vlan: 501
   ip_subnet: '152.50.32.0/24'
   gateway_ip: '152.50.32.1'
   routes: [{'destination':'152.50.32.0/20', 'nexthop':'152.50.32.1'}]

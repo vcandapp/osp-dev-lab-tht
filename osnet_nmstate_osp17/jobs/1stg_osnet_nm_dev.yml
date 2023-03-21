@@ -1,0 +1,124 @@
+def branches = [:]
+def osp_rhel_list = [
+    '17.1': '9.1',
+    '17.0': '9.0'
+]
+def net_config = [
+    'dell-r640-oss-01.lab.eng.brq2.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
+    'dell-r640-oss-07.lab.eng.brq2.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4',
+    'dell-r640-oss-13.lab.eng.brq2.redhat.com': ' --topology-nodes undercloud:1,controller:3 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=eno2 -e override.networks.net2.nic=eno3 -e override.networks.net3.nic=eno4'
+]
+def vlan_config = [
+    'dell-r640-oss-01.lab.eng.brq2.redhat.com': '100',
+    'dell-r640-oss-07.lab.eng.brq2.redhat.com': '300',
+    'dell-r640-oss-13.lab.eng.brq2.redhat.com': '500'
+]
+def OS_REL = osp_rhel_list[params.release]
+def IR_NET_CONFIG = net_config[params.server]
+def VLAN_CONFIG = vlan_config[params.server]
+
+pipeline {
+  agent {
+    node {
+      label 'local'
+      customWorkspace "${JENKINS_HOME}/workspace/${JOB_NAME}/${BUILD_NUMBER}"
+    }
+  }
+  options {
+    lock("${params.server}_level2_lock")
+    ansiColor('xterm')
+  }
+  parameters {
+    choice(
+      name: 'server',
+      choices: [
+        '---',
+        'dell-r640-oss-01.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-07.lab.eng.brq2.redhat.com',
+        'dell-r640-oss-13.lab.eng.brq2.redhat.com'
+      ],
+      description: 'Select a cluster')
+    string(name: 'beaker_user', defaultValue: 'vcandapp', description: 'Beaker username')
+    choice(name: 'release', choices: ['17.0', '17.1'], description: 'Select the OSP release')
+    string(name: 'build', defaultValue: 'passed_phase1', description: 'passed_phase2,passed_phase1,GA')
+    string(name: 'repo_url', defaultValue: 'https://github.com/vcandapp/osp-dev-lab-tht.git', description: 'Deploy Templates Repo')
+    choice(name: 'deploy_type', choices: ['regular','offload','nicpart','sriovonly'], description: 'Deployment Type')
+    booleanParam(name: 'baremetal', defaultValue: false, description: 'Whether to run Baremetal Stage')
+
+    booleanParam(name: 'hasparent',  defaultValue: false, description: 'Hidden')
+  }
+  stages {
+    stage('Baremetal') {
+      when {
+        expression { return params.baremetal && params.server != "---" }
+      }
+      steps {
+        build(
+          job: 'Baremetal_Install',
+          parameters: [
+            string(name: 'server', value:"${params.server}"),
+            string(name: 'beaker_user', value:"${params.beaker_user}")
+          ]
+        )
+      }
+    }
+    stage('Overcloud node pre-prov') {
+      when {
+        expression { return params.server != "---" }
+      }
+      steps {
+        sh './osnet_nmstate_osp17/osp/scripts_v2/install_overcloud.sh'
+      }
+    }
+  }
+
+  post {
+    always {
+      script {
+        sh './osnet_nmstate_osp17/logs/collect.sh'
+      }
+    }
+    success {
+      script {
+        if (params.server != "---" && params.server != "" && !params.hasparent)
+          emailext body: '''
+            JOB: $JOB_NAME #$BUILD_NUMBER
+            STATUS: SUCCESS
+            SERVER: ${server}
+            RELEASE: ${release}
+            BUILD: ${build}
+            TYPE: ${deploy_type}
+            URL: $BUILD_URL\n
+            BUILD INFO
+            ===========
+            ${FILE, path="output"}
+          ''',
+          subject: '''NFV DEV BUILD (${beaker_user}): $JOB_NAME''',
+          recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+          from: "devlab <jenkins@devlab>"
+      }
+      cleanWs()
+    }
+    failure {
+      script {
+        if (params.server != "---" && params.server != "" && !params.hasparent)
+          emailext body: '''
+            JOB: $JOB_NAME #$BUILD_NUMBER
+            STATUS: FAILED
+            SERVER: ${server}
+            RELEASE: ${release}
+            BUILD: ${build}
+            TYPE: ${deploy_type}
+            URL: $BUILD_URL\n
+            BUILD INFO
+            ===========
+            ${FILE, path="output"}
+          ''',
+          subject: '''NFV DEV BUILD (${beaker_user}): $JOB_NAME''',
+          recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+          from: "devlab <jenkins@devlab>"
+      }
+      cleanWs()
+    }
+  }
+}

@@ -26,7 +26,7 @@
       ip_subnet: '152.50.32.0/24'
       allocation_pools: [{'start': '152.50.32.4', 'end': '152.50.32.250'}]
       gateway_ip: '152.50.32.1'
-      vlan: 504
+      vlan: 501
       routes: [{'destination':'152.50.32.0/20', 'nexthop':'152.50.32.1'}]
 - name: Tenant
   vip: false  # Tenant networks do not use VIPs

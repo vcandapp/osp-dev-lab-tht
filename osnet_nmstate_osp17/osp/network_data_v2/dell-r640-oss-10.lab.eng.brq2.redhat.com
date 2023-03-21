@@ -1,6 +1,6 @@
 - name: Storage
   vip: true
-  vlan: 401
+  vlan: 402
   name_lower: storage
   ip_subnet: '152.20.16.0/24'
   gateway_ip: '152.20.16.1'
@@ -9,7 +9,7 @@
 - name: StorageMgmt
   name_lower: storage_mgmt
   vip: true
-  vlan: 402
+  vlan: 403
   ip_subnet: '152.20.48.0/24'
   gateway_ip: '152.20.48.1'
   routes: [{'destination':'152.20.48.0/20', 'nexthop':'152.20.48.1'}]
@@ -17,7 +17,7 @@
 - name: InternalApi
   name_lower: internal_api
   vip: true
-  vlan: 403
+  vlan: 401
   ip_subnet: '152.20.32.0/24'
   gateway_ip: '152.20.32.1'
   routes: [{'destination':'152.20.32.0/20', 'nexthop':'152.20.32.1'}]
