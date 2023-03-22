@@ -84,9 +84,7 @@ pipeline {
       }
       steps {
         echo "Configuring server... "
-        withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
-          sh './osnet_nmstate_osp17/osp/scripts_v2/install_configure.sh'
-        }
+        sh './osnet_nmstate_osp17/osp/scripts_v2/install_configure.sh'
       }
     }
     stage('Topology') {
