@@ -47,10 +47,13 @@ scp ${OPT} network-environment.yaml root@${server}:/root/infrared/${THT_PATH}
 cp ${THT_PATH}/undercloud_hybrid.conf undercloud.conf
 scp $OPT undercloud.conf root@${server}:/root/infrared/
 
-if [ -z $ipmipass ]; then
-    echo "ERROR: IPMI password it not provided"
-    exit 1
-fi
+#if [ -z $ipmipass ]; then
+#    echo "ERROR: IPMI password it not provided"
+#    exit 1
+#fi
+
+#Viji - TBD
+ipmipass='calvin'
 export ipmi_password=$ipmipass
 envsubst < osnet_nmstate_osp17/osp/instackenv/${server} >instack.json
 cat instack.json
