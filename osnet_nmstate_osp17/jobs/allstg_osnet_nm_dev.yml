@@ -84,7 +84,7 @@ pipeline {
       }
       steps {
         echo "Configuring server... "
-        sh './osp/scripts/install_configure.sh'
+        sh './osnet_nmstate_osp17/osp/scripts_v2/install_configure.sh'
       }
     }
     stage('Topology') {
