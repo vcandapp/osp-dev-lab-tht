@@ -17,6 +17,8 @@ def OS_REL = osp_rhel_list[params.release]
 def IR_NET_CONFIG = net_config[params.server]
 def VLAN_CONFIG = vlan_config[params.server]
 
+echo "IR_NET_CONFIG for server is: $IR_NET_CONFIG"
+
 pipeline {
   agent {
     node {
@@ -47,6 +49,7 @@ pipeline {
 
     booleanParam(name: 'hasparent',  defaultValue: false, description: 'Hidden')
   }
+
   stages {
     stage('Baremetal') {
       when {
@@ -80,6 +83,7 @@ pipeline {
         VLAN_CONFIG = "${VLAN_CONFIG}"
       }
       steps {
+        echo "Configuring server... "
         withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
           sh './osnet_nmstate_osp17/osp/scripts_v2/install_configure.sh'
         }
