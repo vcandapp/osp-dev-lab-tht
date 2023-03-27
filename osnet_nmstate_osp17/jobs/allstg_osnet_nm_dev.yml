@@ -104,7 +104,8 @@ pipeline {
         expression { return params.server != "---" }
       }
       steps {
-        sh './osnet_nmstate_osp17/osp/scripts_v2/install_undercloud.sh'
+        withCredentials([usernamePassword(credentialsId: "dell", passwordVariable: 'ipmipass', usernameVariable: 'ipmiusr')]) {
+          sh './osnet_nmstate_osp17/osp/scripts_v2/install_undercloud.sh'
       }
     }
     stage('Introspect') {
