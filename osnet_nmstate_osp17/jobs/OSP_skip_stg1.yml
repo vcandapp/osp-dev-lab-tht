@@ -73,6 +73,15 @@ pipeline {
         )
       }
     }
+    stage('Configure Hypervisor') {
+      when {
+        expression { return params.server != "---" && !params.baremetal }
+      }
+      steps {
+        sh './osp/scripts/baremetal_configure.sh'
+        sh './osp/scripts/install_clean.sh'
+      }
+    }
     stage('Setup') {
       when {
         expression { params.server != "---" }
