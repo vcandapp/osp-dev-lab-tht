@@ -4,7 +4,8 @@ def osp_rhel_list = [
     '16.1': '8.2',
     '16.1.1': '8.2',
     '16.2': '8.4',
-    '17.0': '8.4'
+    '17.0': '9.0'
+    '17.1': '9.2'
 ]
 def net_config = [
     'rhos-nfv-10.lab.eng.rdu2.redhat.com': ' --topology-nodes undercloud:1,controller:1 --topology-network 4_nets_3_bridges_hybrid -e override.networks.net1.nic=em4 -e override.networks.net2.nic=em1 -e override.networks.net3.nic=em2',
