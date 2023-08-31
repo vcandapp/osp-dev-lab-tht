@@ -24,8 +24,7 @@ REPO=""
 if [[ ${RELEASE} != "13" ]]; then
     # Facing error after installing shift-on-stack, fix it before enabling it
     SSL="--ssl yes --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt"
-    REPO="--repos-urls
-http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-9/latest-RHOS-17-RHEL-9.0/compose/OpenStack/x86_64/os/"
+REPO="--repos-urls http://download.eng.pek2.redhat.com/rcm-guest/puddles/OpenStack/17.1-RHEL-9/latest-RHOS-17.1-RHEL-9.2/compose/OpenStack/x86_64/os/"
     #REPO="--repos-urls http://download-node-02.eng.bos.redhat.com/rhel-8/nightly/updates/FDP/latest-FDP-8-RHEL-8/compose/Server/x86_64/os/fdp-nightly-updates.repo"
 fi
 
@@ -41,7 +40,7 @@ inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/inf
 #--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
 
 infrared tripleo-undercloud -vv \
-    -o undercloud.yml --mirror "brq" \
+    -o undercloud.yml --mirror "brq2" \
     --version $RELEASE --build ${BUILD} \
     --boot-mode "uefi" \
     --images-task=rpm --images-update no ${SSL} ${REPO} \
@@ -57,8 +56,6 @@ infrared tripleo-undercloud -vv \
     --config-options ctlplane-subnet.masquerade=true \
     --config-options DEFAULT.undercloud_timezone=UTC \
     --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt
-
-#--build RHOS-17.0-RHEL-8-20211105.n.0--tls-ca 'https://password.corp.redhat.com/RH-IT-Root-CA.crt'
 
 infrared ssh undercloud-0 "sudo yum install -y wget tmux vim"
 infrared ssh undercloud-0 "echo 'set-window-option -g xterm-keys on' >~/.tmux.conf"
