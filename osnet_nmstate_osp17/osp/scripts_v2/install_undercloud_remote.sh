@@ -55,7 +55,7 @@ infrared tripleo-undercloud -vv \
     --config-options ctlplane-subnet.inspection_iprange=${inspection_iprange} \
     --config-options ctlplane-subnet.masquerade=true \
     --config-options DEFAULT.undercloud_timezone=UTC \
-    --tls-ca https://password.corp.redhat.com/RH-IT-Root-CA.crt
+    --tls-ca https://certs.corp.redhat.com/certs/Current-IT-Root-CAs.pem
 
 infrared ssh undercloud-0 "sudo yum install -y wget tmux vim"
 infrared ssh undercloud-0 "echo 'set-window-option -g xterm-keys on' >~/.tmux.conf"
