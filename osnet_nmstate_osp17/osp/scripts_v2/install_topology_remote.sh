@@ -22,6 +22,7 @@ VERSION16_2="8.4"
 VERSION17_0="8.4"
 VERSION17_0_RHEL9="9.0"
 VERSION17_1_RHEL9_1="9.1"
+VERSION17_1_RHEL9_2="9.2"
 #####################################
 
 echo "Deploying OSP version $RELEASE"
@@ -56,7 +57,7 @@ elif [[ $MAJ -eq 17 ]]; then
         if [[ $MIN -eq 0  ]]; then
             BASE=${BASE9/@VERSION@/$VERSION17_0_RHEL9}
         elif [[ $MIN -eq 1 ]]; then
-            BASE=${BASE9/@VERSION@/$VERSION17_1_RHEL9_1}
+            BASE=${BASE9/@VERSION@/$VERSION17_1_RHEL9_2}
         fi
     else
         echo "Unsupported release - ${RELEASE}"
