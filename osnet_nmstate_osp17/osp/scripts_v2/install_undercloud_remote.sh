@@ -37,8 +37,6 @@ dhcp_end=$(awk -F "=" '/^dhcp_end/{print $2;exit}' /root/infrared/undercloud.con
 gateway=$(awk -F "=" '/^gateway/{print $2;exit}' /root/infrared/undercloud.conf | xargs)
 inspection_iprange=$(awk -F "=" '/^inspection_iprange/{print $2;exit}' /root/infrared/undercloud.conf | xargs)
 
-#--repos-urls http://download.devel.redhat.com/rcm-guest/puddles/OpenStack/17.0-RHEL-8/latest-RHOS-17.0-RHEL-8.4/compose/OpenStack/x86_64/os/ \
-
 infrared tripleo-undercloud -vv \
     -o undercloud.yml --mirror "brq2" \
     --version $RELEASE --build ${BUILD} \
@@ -47,7 +45,6 @@ infrared tripleo-undercloud -vv \
     --config-options DEFAULT.local_ip=${local_ip} \
     --config-options DEFAULT.undercloud_public_host=${undercloud_public_host} \
     --config-options DEFAULT.undercloud_admin_host=${undercloud_admin_host} \
-    --config-options DEFAULT.overcloud_domain_name="localdomain" \
     --config-options ctlplane-subnet.cidr=${cidr} \
     --config-options ctlplane-subnet.dhcp_start=${dhcp_start} \
     --config-options ctlplane-subnet.dhcp_end=${dhcp_end} \

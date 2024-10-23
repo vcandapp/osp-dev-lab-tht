@@ -21,13 +21,13 @@ openstack overcloud roles generate -o $HOME/roles_data.yaml ControllerSriov Comp
 
 openstack overcloud deploy $PARAMS \
     --templates /usr/share/openstack-tripleo-heat-templates \
-    --timeout 120 \
+    --ntp-server clock.redhat.com,time1.google.com,time2.google.com,time3.google.com,time4.google.com \
     --stack overcloud \
-    --network-config \
     -r /home/stack/roles_data.yaml \
     --deployed-server \
-    --baremetal-deployment /home/stack/osp17_ref/network/baremetal_deployment.yaml \
-    --vip-file /home/stack/osp17_ref/network/vip_data.yaml \
+    -e /home/stack/templates/overcloud-baremetal-deployed.yaml \
+    -e /home/stack/templates/overcloud-networks-deployed.yaml \
+    -e /home/stack/templates/overcloud-vip-deployed.yaml \
     -n /home/stack/osp17_ref/network/network_data_v2.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/services/neutron-ovn-dpdk.yaml \
     -e /usr/share/openstack-tripleo-heat-templates/environments/services/neutron-ovn-sriov.yaml \
