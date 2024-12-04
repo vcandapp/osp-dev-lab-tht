@@ -47,7 +47,7 @@ pipeline {
         expression { return params.server != "---" }
       }
       steps {
-        sh './osp/scripts_v2/baremetal_configure_osnet.sh"
+        sh './osp/scripts_v2/baremetal_configure_osnet.sh'
       }
     }
   }
