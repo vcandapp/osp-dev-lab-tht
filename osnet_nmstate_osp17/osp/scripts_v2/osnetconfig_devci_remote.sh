@@ -5,12 +5,12 @@
 
 set -ex
 
-yum install -y git python3 libselinux-python3 patch tmux wget
+yum install -y git python3 libselinux-python3 pip3 patch tmux wget
 yes|ssh-keygen -t rsa -q -f "$HOME/.ssh/id_rsa" -N ""
 cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 
-if [ -d infrared ]; then
-    rm -rf infrared
+if [ -d os-net-config ]; then
+    rm -rf os-net-config
 fi
 git clone https://github.com/os-net-config/os-net-config.git
 cd os-net-config/
@@ -23,4 +23,4 @@ echo "export IR_HOME=`pwd`" >> .venv/bin/activate
 source .venv/bin/activate
 pip install -U pip
 pip install .
-#infrared plugin add all
+python setup.py install --prefix=/usr
