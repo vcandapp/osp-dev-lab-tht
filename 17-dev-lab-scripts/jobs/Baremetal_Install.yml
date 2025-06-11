@@ -21,8 +21,8 @@ pipeline {
         'dell-r640-oss-13.lab.eng.brq2.redhat.com'
       ],
       description: 'Select a cluster')
-    string(name: 'beaker_user', defaultValue: 'skramaja', description: 'Beaker username')
-    choice(name: 'rhel', choices: ['default', '7.9', '8.2', '8.4', '9.0'], description: 'Select RHEL Version')
+    string(name: 'beaker_user', defaultValue: 'vcandapp', description: 'Beaker username')
+    choice(name: 'rhel', choices: ['default', '7.9', '8.2', '8.4', '9.0', '9.2', '9.4', '10.0'], description: 'Select RHEL Version')
   }
   stages {
     stage('Install Baremetal') {
@@ -32,7 +32,7 @@ pipeline {
       steps {
         echo 'Starting Baremetal Provisioning'
         withCredentials([usernamePassword(credentialsId: "${params.beaker_user}", passwordVariable: 'beakerpass', usernameVariable: 'beakerusr')]) {
-          sh './osp/scripts/baremetal_provision.sh'
+          sh './osp/scripts_v2/baremetal_provision.sh'
         }
         echo 'Finished Baremetal Provisioning'
       }
@@ -42,7 +42,7 @@ pipeline {
         expression { return params.server != "---" }
       }
       steps {
-        sh './osp/scripts/baremetal_configure.sh'
+        sh './osp/scripts_v2/baremetal_configure.sh'
       }
     }
   }
