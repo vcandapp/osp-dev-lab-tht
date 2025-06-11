@@ -20,6 +20,15 @@ fi
 if [[ $rhel == "default" || $rhel == "8.2" ]]; then
     echo "Using RHEL 8.2"
     RHEL_VERSION="8.2"
+elif [[ $rhel == "9.0" ]]; then
+    echo "Using RHEL 9.0"
+    RHEL_VERSION="9.0"
+elif [[ $rhel == "9.2" ]]; then
+    echo "Using RHEL 9.2"
+    RHEL_VERSION="9.2"
+elif [[ $rhel == "9.4" ]]; then
+    echo "Using RHEL 9.4"
+    RHEL_VERSION="9.4"
 elif [[ $rhel == "8.4" ]]; then
     echo "Using RHEL 8.4"
     RHEL_VERSION="8.4"
