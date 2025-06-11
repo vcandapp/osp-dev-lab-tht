@@ -32,7 +32,6 @@ pipeline {
       steps {
         echo 'Starting Baremetal Provisioning'
         withCredentials([usernamePassword(credentialsId: "${params.beaker_user}", passwordVariable: 'beakerpass', usernameVariable: 'beakerusr')]) {
-          echo "username is $USERNAME"
           sh './osp/scripts_v2/baremetal_provision.sh'
         }
         echo 'Finished Baremetal Provisioning'
